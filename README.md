@@ -16,6 +16,8 @@
 > $ composer create-project --prefer-dist laravel/laravel:^8.0 project
 6. Next, move the content of the project folder, to our root directory using this command
 > $ mv ./project/* ./
+> $ mv ./project.* ./
+select no
 7. Last, remove project folder using this command 
 > $ rm -rf project/
 8. exit the container, using this command
