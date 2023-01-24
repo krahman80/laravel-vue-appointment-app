@@ -41,10 +41,10 @@ or
 > php artisan migrate
 
 # Application Feature
-## 
+## Booking appointment app
 
 
-# To Do
+# Completed To Do
 * create user.
 * install spatie/laravel-permission (rbac).
 * create schedule Model and table
@@ -52,6 +52,8 @@ or
 * seed permission and roles
 * assign role to user as doctor, patient and admin
 * seed schedule table with data
+
+# Not Completed To Do
 * create doctor list page
 * create docker detail page
 
