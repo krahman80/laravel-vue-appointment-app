@@ -2108,30 +2108,31 @@ var render = function render() {
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "container w-75"
-  }, [_c("nav", {
-    staticClass: "navbar navbar-light bg-white border mb-3"
-  }, [_c("div", {
-    staticClass: "container"
+  }, [_c("header", {
+    staticClass: "d-flex flex-wrap justify-content-center py-3 mb-4 border"
+  }, [_c("ul", {
+    staticClass: "nav nav-pills"
+  }, [_c("li", {
+    staticClass: "nav-item"
   }, [_c("router-link", {
-    staticClass: "navbar-brand mr-auto",
+    staticClass: "nav-link link-dark",
     attrs: {
+      "aria-current": "page",
       to: {
         name: "home"
       }
     }
-  }, [_vm._v("home")]), _vm._v(" "), _c("div", [_c("ul", {
-    staticClass: "navbar-nav"
-  }, [_c("li", {
+  }, [_vm._v("Home")])], 1), _vm._v(" "), _c("li", {
     staticClass: "nav-item"
   }, [_c("router-link", {
-    staticClass: "nav-link",
+    staticClass: "nav-link link-dark",
     attrs: {
       "aria-current": "page",
       to: {
         name: "about"
       }
     }
-  }, [_vm._v("about")])], 1)])])], 1)]), _vm._v(" "), _c("router-view")], 1);
+  }, [_vm._v("About")])], 1)])]), _vm._v(" "), _c("router-view")], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;

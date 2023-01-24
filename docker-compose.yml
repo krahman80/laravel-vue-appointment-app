@@ -41,9 +41,9 @@ services:
       - '8040:3306'
     environment:
       MYSQL_ROOT_PASSWORD: 'root'
-      MYSQL_USER: 'homestead'
+      MYSQL_USER: 'user'
       MYSQL_PASSWORD: 'user'
-      MYSQL_DATABASE: 'user'
+      MYSQL_DATABASE: 'homestead'
     volumes:
       - ./docker/db:/docker-entrypoint-initdb.d
       - db_data:/var/lib/mysql

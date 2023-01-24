@@ -40,5 +40,18 @@ or
 4. back to container shell, create this command.
 > php artisan migrate
 
+# Application Feature
+## 
 
+
+# To Do
+* create user.
+* install spatie/laravel-permission (rbac).
+* create schedule Model and table
+* seed user, doctor, patient, admin. 
+* seed permission and roles
+* assign role to user as doctor, patient and admin
+* seed schedule table with data
+* create doctor list page
+* create docker detail page
 
