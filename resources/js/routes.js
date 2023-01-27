@@ -1,23 +1,23 @@
 import VueRouter from "vue-router";
-import HomeComponent from "./components/HomeComponent";
+import DoctorList from "./components/DoctorList";
 import AboutComponent from "./components/AboutComponent";
 
 const routes = [
     {
-        path: '/',
+        path: "/",
         name: "home",
-        component: HomeComponent,
+        component: DoctorList,
     },
     {
-        path: '/about',
-        name: 'about',
+        path: "/about",
+        name: "about",
         component: AboutComponent,
     }
 ];
 
 const router = new VueRouter({
     routes,
-    mode:"history",
+    mode: "history",
 });
 
 export default router;

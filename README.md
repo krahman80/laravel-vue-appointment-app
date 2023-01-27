@@ -54,6 +54,10 @@ or
 * seed schedule table with data
 
 # Not Completed To Do
+* create doctor api
 * create doctor list page
-* create docker detail page
+* create doctor item component
+* create doctor details
+* create docker detail page/component
+
 
