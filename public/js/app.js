@@ -2092,8 +2092,22 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       isLoading: false,
-      doctors: null
+      doctors: null,
+      columns: 3
     };
+  },
+  computed: {
+    rows: function rows() {
+      return this.doctors === null ? 0 : Math.ceil(this.doctors.length / this.columns);
+    }
+  },
+  methods: {
+    doctorInRow: function doctorInRow(row) {
+      return this.doctors.slice((row - 1) * this.columns, row * this.columns);
+    },
+    placeHolederInRow: function placeHolederInRow(row) {
+      return this.columns - this.doctorInRow(row).length;
+    }
   },
   created: function created() {
     var _this = this;
@@ -2293,18 +2307,28 @@ var render = function render() {
     staticClass: "h3 my-3"
   }, [_vm._v("Doctor List")]), _vm._v(" "), _vm.isLoading ? _c("div", {
     staticClass: "row"
-  }, [_c("p", [_vm._v("data is loading...")])]) : _c("div", {
-    staticClass: "row g-3"
-  }, _vm._l(_vm.doctors, function (doctor, index) {
-    return _c("doctor-list-item", {
-      key: index,
-      attrs: {
-        name: doctor.name,
-        description: doctor.description,
-        price: 1500
-      }
-    });
-  }), 1)])]);
+  }, [_c("p", [_vm._v("data is loading...")])]) : _c("div", _vm._l(_vm.rows, function (row) {
+    return _c("div", {
+      key: "row" + row,
+      staticClass: "row mb-4"
+    }, [_vm._l(_vm.doctorInRow(row), function (doctor, column) {
+      return _c("div", {
+        key: "row" + row + column,
+        staticClass: "col"
+      }, [_c("doctor-list-item", {
+        attrs: {
+          name: doctor.name,
+          description: doctor.description,
+          price: 1500
+        }
+      })], 1);
+    }), _vm._v(" "), _vm._l(_vm.placeHolederInRow(row), function (p) {
+      return _c("div", {
+        key: "col" + row + p,
+        staticClass: "col"
+      });
+    })], 2);
+  }), 0)])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -2328,25 +2352,14 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "col-lg-2 col-md-3 mb-4 mb-lg-0"
+    staticClass: "card"
   }, [_c("div", {
-    staticClass: "card rounded shadow-sm border-0"
-  }, [_c("div", {
-    staticClass: "card-body p-0"
-  }, [_c("div", {
-    staticClass: "px-5 py-4 text-center card-img-top"
-  }, [_c("img", {
-    staticClass: "bg-light rounded-circle mb-2 img-thumbnail d-block mx-auto",
-    attrs: {
-      src: "http://placekitten.com/300/300",
-      alt: "...",
-      width: "100"
-    }
-  }), _vm._v(" "), _c("h5", {
-    staticClass: "text-dark mb-0"
+    staticClass: "card-body"
+  }, [_c("h5", {
+    staticClass: "card-title"
   }, [_vm._v(_vm._s(_vm.name))]), _vm._v(" "), _c("p", {
-    staticClass: "small text-muted mb-0"
-  }, [_vm._v(_vm._s(_vm.description) + " - " + _vm._s(_vm.price))])])])])]);
+    staticClass: "card-text"
+  }, [_vm._v(_vm._s(_vm.description) + " - " + _vm._s(_vm.price))])])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;

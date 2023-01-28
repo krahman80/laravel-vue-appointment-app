@@ -1,5 +1,5 @@
 <template>
-  <div class="col-lg-2 col-md-3 mb-4 mb-lg-0">
+  <!-- <div class="col-lg-2 col-md-3 mb-4 mb-lg-0">
     <div class="card rounded shadow-sm border-0">
       <div class="card-body p-0">
         <div class="px-5 py-4 text-center card-img-top"><img
@@ -13,7 +13,14 @@
         </div>
       </div>
     </div>
+  </div> -->
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">{{ name }}</h5>
+      <p class="card-text">{{ description }} - {{ price }}</p>
+    </div>
   </div>
+
 </template>
 <script>
 export default {

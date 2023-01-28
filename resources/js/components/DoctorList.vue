@@ -2,23 +2,38 @@
   <div class="row justify-content-center">
     <div class="col-md-12">
       <h1 class="h3 my-3">Doctor List</h1>
+
       <div
         class="row"
         v-if="isLoading"
       >
         <p>data is loading...</p>
       </div>
-      <div
-        class="row g-3"
-        v-else
-      >
-        <doctor-list-item
-          :name="doctor.name"
-          :description="doctor.description"
-          :price="1500"
-          v-for="(doctor, index) in doctors"
-          v-bind:key="index"
-        ></doctor-list-item>
+      <div v-else>
+
+        <div
+          class="row mb-4"
+          v-for="row in rows"
+          :key="'row' + row"
+        >
+          <div
+            class="col"
+            v-for="(doctor, column) in doctorInRow(row)"
+            :key="'row' + row + column"
+          >
+            <doctor-list-item
+              :name="doctor.name"
+              :description="doctor.description"
+              :price="1500"
+            ></doctor-list-item>
+          </div>
+          <div
+            class="col"
+            v-for="p in placeHolederInRow(row)"
+            :key="'col' + row + p"
+          ></div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -36,7 +51,23 @@ export default {
     return {
       isLoading: false,
       doctors: null,
+      columns: 3,
     };
+  },
+  computed: {
+    rows() {
+      return this.doctors === null
+        ? 0
+        : Math.ceil(this.doctors.length / this.columns);
+    },
+  },
+  methods: {
+    doctorInRow(row) {
+      return this.doctors.slice((row - 1) * this.columns, row * this.columns);
+    },
+    placeHolederInRow(row) {
+      return this.columns - this.doctorInRow(row).length;
+    },
   },
   created() {
     this.isLoading = true;
