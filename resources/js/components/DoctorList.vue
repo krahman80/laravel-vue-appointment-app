@@ -30,7 +30,7 @@
           <div
             class="col"
             v-for="p in placeHolederInRow(row)"
-            :key="'col' + row + p"
+            :key="'placeholder' + row + p"
           ></div>
         </div>
 
