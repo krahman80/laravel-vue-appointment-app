@@ -14,10 +14,12 @@
       </div>
     </div>
   </div> -->
-  <div class="card">
+  <div class="card w-100">
     <div class="card-body">
-      <h5 class="card-title">{{ name }}</h5>
-      <p class="card-text">{{ description }} - {{ price }}</p>
+      <router-link :to="{ name:'doctor', params: { id: id } }">
+        <h5 class="card-title">{{ name }}</h5>
+      </router-link>
+      <p class="card-text">{{ email }} - {{ id }}</p>
     </div>
   </div>
 
@@ -26,8 +28,8 @@
 export default {
   props: {
     name: String,
-    description: String,
-    price: Number,
+    email: String,
+    id: Number,
   },
 };
 </script>

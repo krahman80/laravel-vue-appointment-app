@@ -17,15 +17,11 @@
           :key="'row' + row"
         >
           <div
-            class="col"
-            v-for="(doctor, column) in doctorInRow(row)"
+            class="col d-flex align-item-stretch"
+            v-for="(doctor, column) in doctorsInRow(row)"
             :key="'row' + row + column"
           >
-            <doctor-list-item
-              :name="doctor.name"
-              :description="doctor.description"
-              :price="1500"
-            ></doctor-list-item>
+            <doctor-list-item v-bind="doctor"></doctor-list-item>
           </div>
           <div
             class="col"
@@ -62,53 +58,21 @@ export default {
     },
   },
   methods: {
-    doctorInRow(row) {
+    doctorsInRow(row) {
       return this.doctors.slice((row - 1) * this.columns, row * this.columns);
     },
     placeHolederInRow(row) {
-      return this.columns - this.doctorInRow(row).length;
+      return this.columns - this.doctorsInRow(row).length;
     },
   },
   created() {
     this.isLoading = true;
 
-    setTimeout(() => {
-      this.doctors = [
-        {
-          name: "doctorXXX",
-          description: "lorem ipsum dol amet",
-        },
-        {
-          name: "doctorYYY",
-          description: "lorem ipsum dol amet",
-        },
-        {
-          name: "doctorZZZ",
-          description: "lorem ipsum dol amet",
-        },
-        {
-          name: "doctorAAA",
-          description: "lorem ipsum dol amet",
-        },
-        {
-          name: "doctorBBB",
-          description: "lorem ipsum dol amet",
-        },
-        {
-          name: "doctorCCC",
-          description: "lorem ipsum dol amet",
-        },
-        {
-          name: "doctorDDD",
-          description: "lorem ipsum dol amet",
-        },
-        {
-          name: "doctorEEE",
-          description: "lorem ipsum dol amet",
-        },
-      ];
+    const result = axios.get("/api/doctors").then((result) => {
+      this.doctors = result.data.data;
       this.isLoading = false;
-    }, 2000);
+      // this.doctors.push({ name: "X", email: "x" });
+    });
   },
 };
 </script>

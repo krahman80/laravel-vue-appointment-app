@@ -1,5 +1,6 @@
 import VueRouter from "vue-router";
 import DoctorList from "./components/DoctorList";
+import DoctorShow from "./components/DoctorShow";
 import AboutComponent from "./components/AboutComponent";
 
 const routes = [
@@ -7,6 +8,11 @@ const routes = [
         path: "/",
         name: "home",
         component: DoctorList,
+    },
+    {
+        path: "/doctors/:id",
+        name: "doctor",
+        component: DoctorShow,
     },
     {
         path: "/about",

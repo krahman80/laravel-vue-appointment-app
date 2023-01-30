@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav class="navbar navbar-expand-lg py-3 navbar-dark bg-dark shadow-sm">
-      <div class="container">
+      <div class="container w-75">
 
         <router-link
           class="navbar-brand"
@@ -52,7 +52,7 @@
       </div>
     </nav>
 
-    <div class="container my-5">
+    <div class="container w-75 my-5">
       <router-view></router-view>
     </div>
 
