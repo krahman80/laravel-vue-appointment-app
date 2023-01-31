@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\DoctorSchedulesController;
+use App\Models\Schedule;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,3 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('doctors', DoctorController::class)->only(['index','show']);
+Route::get('doctor-schedules/{user_id}', [DoctorSchedulesController::class, 'getDate']);
+// Route::get('doctor-schedules/{user_id}/date/{date}', [DoctorSchedulesController::class, 'getTime']);
