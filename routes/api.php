@@ -21,5 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('doctors', DoctorController::class)->only(['index','show']);
-Route::get('doctor-schedules/{user_id}', [DoctorSchedulesController::class, 'getDate']);
-// Route::get('doctor-schedules/{user_id}/date/{date}', [DoctorSchedulesController::class, 'getTime']);
+Route::get('doctors/{id}/schedule', [DoctorSchedulesController::class, 'getDate'])->name('doctors.shedule');
+Route::get('doctors/{id}/schedule/{time}', [DoctorSchedulesController::class, 'getTime'])->name('doctors.schedule.time');

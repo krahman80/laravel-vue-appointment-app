@@ -52,12 +52,16 @@ or
 * seed permission and roles
 * assign role to user as doctor, patient and admin
 * seed schedule table with data
-
-# Not Completed To Do
 * create doctor api
 * create doctor list page
 * create doctor item component
 * create doctor details
-* create docker detail page/component
+* create doctor detail page/component
+* create doctor time slot item
+
+# Not Completed To Do
+* validate requested date, show warning less than today date
+* handle axios request error on doctor list page
+* handle axios request error on doctor show page
 
 
