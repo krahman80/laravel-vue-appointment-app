@@ -22,6 +22,12 @@ class DoctorSchedulesController extends Controller
 
     public function getTime($id, $date, Request $request) {
         // dd($id . " and " . $date);
-        return new DoctorScheduleCollection(Schedule::select('start_time', 'end_time')->where('user_id', $id)->where('date', $date)->get());
+        $query = Schedule::select('start_time', 'end_time')->where('user_id', $id)->where('date', $date)->get();
+        if ($query->isEmpty()) {
+            return response()->json(['data' => []], 404);
+        }
+        else {
+            return new DoctorScheduleCollection($query);
+        }
     }
 }

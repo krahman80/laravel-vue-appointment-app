@@ -1,18 +1,18 @@
 <template>
   <div>
-    <input
-      class="form-check-input"
-      type="radio"
-      name="optionsRadios"
-      id="optionsRadios1"
-      value="option1"
-    >
-    <label
-      class="form-check-label"
-      for="optionsRadios1"
-    >
-      {{ formatTime(start_time)}} - {{ formatTime(end_time) }}
-    </label>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="flexRadioDefault"
+      >
+      <label
+        class="form-check-label"
+        for="flexRadioDefault1"
+      >
+        {{ formatTime(start_time)}} - {{ formatTime(end_time) }}
+      </label>
+    </div>
   </div>
 </template>
 

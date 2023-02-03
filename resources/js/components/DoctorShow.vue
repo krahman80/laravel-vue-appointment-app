@@ -33,7 +33,7 @@
             <div class="row">
               <div class="col-lg-6 col-md-12 d-flex justify-content-center">
                 <div class="my-2">
-                  <h5 class="text-muted mb-3 text-center">Available day</h5>
+                  <h5 class="text-muted mb-3 text-center">Calendar</h5>
                   <vc-calendar
                     :attributes="attributes"
                     :min-date="new Date()"
@@ -43,26 +43,34 @@
 
               </div>
               <div class="col-lg-6 col-md-12 d-flex justify-content-center">
-                <div class="my-2">
-                  <h5 class="text-muted mb-3">Available time</h5>
+                <div class="my-2 text-center">
+                  <h5 class="text-muted mb-3">Available Schedule</h5>
                   <div class="form-group mb-3">
 
-                    <div v-if="timeSlot.length > 0">
+                    <div v-if="timeSlot.length == 0">
+                      <p
+                        v-if="status==404"
+                        class="text-success"
+                      >
+                        Schedule not available!
+                      </p>
+                    </div>
+                    <div v-else>
                       <div
-                        class="form-check"
                         v-for="(timeItem, index) in timeSlot"
                         :key="'ts'+index"
                       >
                         <doctor-show-time-item v-bind="timeItem"></doctor-show-time-item>
                       </div>
-                    </div>
-                    <div v-else>
-                      data is not available
+
                     </div>
 
                   </div>
                   <div class="form-group">
-                    <button class="btn btn-secondary btn-sm w-100">Submit</button>
+                    <button
+                      class="btn btn-secondary btn-sm w-auto"
+                      :disabled="timeSlot.length == 0"
+                    >Submit</button>
                   </div>
                 </div>
               </div>
@@ -100,6 +108,7 @@ export default {
       schedules: null,
       isLoading: false,
       timeSlot: [],
+      status: null,
     };
   },
   created() {
@@ -127,13 +136,14 @@ export default {
   methods: {
     onClickDay(day) {
       this.timeSlot = [];
+      this.status = null;
       const dayString = this.convertDate(day.date);
       const url = `/api/doctors/${this.$route.params.id}/schedule/${dayString}`;
       //make axios request
       axios
         .get(url)
         .then((response) => (this.timeSlot = response.data.data))
-        .catch((error) => console.log(error));
+        .catch((error) => (this.status = error.response.status));
     },
     convertDate(date) {
       var yyyy = date.getFullYear().toString();

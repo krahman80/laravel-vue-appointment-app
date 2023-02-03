@@ -2171,7 +2171,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       doctor: null,
       schedules: null,
       isLoading: false,
-      timeSlot: []
+      timeSlot: [],
+      status: null
     };
   },
   created: function created() {
@@ -2195,13 +2196,14 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     onClickDay: function onClickDay(day) {
       var _this2 = this;
       this.timeSlot = [];
+      this.status = null;
       var dayString = this.convertDate(day.date);
       var url = "/api/doctors/".concat(this.$route.params.id, "/schedule/").concat(dayString);
       //make axios request
       axios.get(url).then(function (response) {
         return _this2.timeSlot = response.data.data;
       })["catch"](function (error) {
-        return console.log(error);
+        return _this2.status = error.response.status;
       });
     },
     convertDate: function convertDate(date) {
@@ -2509,7 +2511,7 @@ var render = function render() {
     staticClass: "my-2"
   }, [_c("h5", {
     staticClass: "text-muted mb-3 text-center"
-  }, [_vm._v("Available day")]), _vm._v(" "), _c("vc-calendar", {
+  }, [_vm._v("Calendar")]), _vm._v(" "), _c("vc-calendar", {
     attrs: {
       attributes: _vm.attributes,
       "min-date": new Date()
@@ -2520,29 +2522,29 @@ var render = function render() {
   })], 1)]), _vm._v(" "), _c("div", {
     staticClass: "col-lg-6 col-md-12 d-flex justify-content-center"
   }, [_c("div", {
-    staticClass: "my-2"
+    staticClass: "my-2 text-center"
   }, [_c("h5", {
     staticClass: "text-muted mb-3"
-  }, [_vm._v("Available time")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Available Schedule")]), _vm._v(" "), _c("div", {
     staticClass: "form-group mb-3"
-  }, [_vm.timeSlot.length > 0 ? _c("div", _vm._l(_vm.timeSlot, function (timeItem, index) {
+  }, [_vm.timeSlot.length == 0 ? _c("div", [_vm.status == 404 ? _c("p", {
+    staticClass: "text-success"
+  }, [_vm._v("\n                      Schedule not available!\n                    ")]) : _vm._e()]) : _c("div", _vm._l(_vm.timeSlot, function (timeItem, index) {
     return _c("div", {
-      key: "ts" + index,
-      staticClass: "form-check"
+      key: "ts" + index
     }, [_c("doctor-show-time-item", _vm._b({}, "doctor-show-time-item", timeItem, false))], 1);
-  }), 0) : _c("div", [_vm._v("\n                    data is not available\n                  ")])]), _vm._v(" "), _vm._m(0)])])])])])])]), _vm._v(" "), _c("div", {
+  }), 0)]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("button", {
+    staticClass: "btn btn-secondary btn-sm w-auto",
+    attrs: {
+      disabled: _vm.timeSlot.length == 0
+    }
+  }, [_vm._v("Submit")])])])])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-lg-3 col-md-12 mb-2"
   }, [_vm._v("\n    xxx\n\n  ")])]);
 };
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "form-group"
-  }, [_c("button", {
-    staticClass: "btn btn-secondary btn-sm w-100"
-  }, [_vm._v("Submit")])]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -2563,20 +2565,20 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_c("input", {
+  return _c("div", [_c("div", {
+    staticClass: "form-check"
+  }, [_c("input", {
     staticClass: "form-check-input",
     attrs: {
       type: "radio",
-      name: "optionsRadios",
-      id: "optionsRadios1",
-      value: "option1"
+      name: "flexRadioDefault"
     }
   }), _vm._v(" "), _c("label", {
     staticClass: "form-check-label",
     attrs: {
-      "for": "optionsRadios1"
+      "for": "flexRadioDefault1"
     }
-  }, [_vm._v("\n    " + _vm._s(_vm.formatTime(_vm.start_time)) + " - " + _vm._s(_vm.formatTime(_vm.end_time)) + "\n  ")])]);
+  }, [_vm._v("\n      " + _vm._s(_vm.formatTime(_vm.start_time)) + " - " + _vm._s(_vm.formatTime(_vm.end_time)) + "\n    ")])])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;
