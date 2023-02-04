@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Schedule::class);
     }
+
+    public function appointments() 
+    {
+        return this->belongsToMany(Schedule::class)->withPivot('status')->withTimestamps();
+    }
 }

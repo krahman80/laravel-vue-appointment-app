@@ -2236,6 +2236,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           }))
         }];
       }
+    },
+    timeSlotIsEmpty: function timeSlotIsEmpty() {
+      return this.timeSlot.length == 0;
+    },
+    timeSlotRequestIsEmpty: function timeSlotRequestIsEmpty() {
+      return this.status == 404;
     }
   }
 });
@@ -2255,10 +2261,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    start_time: String,
-    end_time: String
+    timeSlot: Array
   },
-  computed: {},
+  data: function data() {
+    return {};
+  },
+  computed: {
+    timeSlotIsEmpty: function timeSlotIsEmpty() {
+      return Array.isArray(this.timeSlot) && !this.timeSlot.length;
+    }
+  },
   methods: {
     formatTime: function formatTime(timeSlot) {
       return String(timeSlot).substring(0, timeSlot.length - 3);
@@ -2525,22 +2537,13 @@ var render = function render() {
     staticClass: "my-2 text-center"
   }, [_c("h5", {
     staticClass: "text-muted mb-3"
-  }, [_vm._v("Available Schedule")]), _vm._v(" "), _c("div", {
-    staticClass: "form-group mb-3"
-  }, [_vm.timeSlot.length == 0 ? _c("div", [_vm.status == 404 ? _c("p", {
+  }, [_vm._v("Available Schedule")]), _vm._v(" "), _vm.timeSlotIsEmpty ? _c("div", [_vm.timeSlotRequestIsEmpty ? _c("p", {
     staticClass: "text-success"
-  }, [_vm._v("\n                      Schedule not available!\n                    ")]) : _vm._e()]) : _c("div", _vm._l(_vm.timeSlot, function (timeItem, index) {
-    return _c("div", {
-      key: "ts" + index
-    }, [_c("doctor-show-time-item", _vm._b({}, "doctor-show-time-item", timeItem, false))], 1);
-  }), 0)]), _vm._v(" "), _c("div", {
-    staticClass: "form-group"
-  }, [_c("button", {
-    staticClass: "btn btn-secondary btn-sm w-auto",
+  }, [_vm._v("\n                    Schedule not available!\n                  ")]) : _vm._e()]) : _c("div", [_c("doctor-show-time-item", {
     attrs: {
-      disabled: _vm.timeSlot.length == 0
+      "time-slot": _vm.timeSlot
     }
-  }, [_vm._v("Submit")])])])])])])])])]), _vm._v(" "), _c("div", {
+  })], 1)])])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-lg-3 col-md-12 mb-2"
   }, [_vm._v("\n    xxx\n\n  ")])]);
 };
@@ -2565,20 +2568,32 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_c("div", {
-    staticClass: "form-check"
-  }, [_c("input", {
-    staticClass: "form-check-input",
+  return _c("div", [_vm._l(_vm.timeSlot, function (slot, index) {
+    return _c("div", {
+      key: index,
+      staticClass: "form-group"
+    }, [_c("div", {
+      staticClass: "form-check"
+    }, [_c("input", {
+      staticClass: "form-check-input",
+      attrs: {
+        type: "radio",
+        name: "flexRadioDefault"
+      }
+    }), _vm._v(" "), _c("label", {
+      staticClass: "form-check-label",
+      attrs: {
+        "for": "flexRadioDefault1"
+      }
+    }, [_vm._v("\n        " + _vm._s(_vm.formatTime(slot.start_time)) + " - " + _vm._s(_vm.formatTime(slot.end_time)) + "\n      ")])])]);
+  }), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("button", {
+    staticClass: "btn btn-secondary btn-sm w-auto",
     attrs: {
-      type: "radio",
-      name: "flexRadioDefault"
+      disabled: _vm.timeSlotIsEmpty
     }
-  }), _vm._v(" "), _c("label", {
-    staticClass: "form-check-label",
-    attrs: {
-      "for": "flexRadioDefault1"
-    }
-  }, [_vm._v("\n      " + _vm._s(_vm.formatTime(_vm.start_time)) + " - " + _vm._s(_vm.formatTime(_vm.end_time)) + "\n    ")])])]);
+  }, [_vm._v("Submit")])])], 2);
 };
 var staticRenderFns = [];
 render._withStripped = true;

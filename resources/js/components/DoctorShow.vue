@@ -45,33 +45,19 @@
               <div class="col-lg-6 col-md-12 d-flex justify-content-center">
                 <div class="my-2 text-center">
                   <h5 class="text-muted mb-3">Available Schedule</h5>
-                  <div class="form-group mb-3">
 
-                    <div v-if="timeSlot.length == 0">
-                      <p
-                        v-if="status==404"
-                        class="text-success"
-                      >
-                        Schedule not available!
-                      </p>
-                    </div>
-                    <div v-else>
-                      <div
-                        v-for="(timeItem, index) in timeSlot"
-                        :key="'ts'+index"
-                      >
-                        <doctor-show-time-item v-bind="timeItem"></doctor-show-time-item>
-                      </div>
-
-                    </div>
-
+                  <div v-if="timeSlotIsEmpty">
+                    <p
+                      v-if="timeSlotRequestIsEmpty"
+                      class="text-success"
+                    >
+                      Schedule not available!
+                    </p>
                   </div>
-                  <div class="form-group">
-                    <button
-                      class="btn btn-secondary btn-sm w-auto"
-                      :disabled="timeSlot.length == 0"
-                    >Submit</button>
+                  <div v-else>
+                    <doctor-show-time-item v-bind:time-slot="timeSlot"></doctor-show-time-item>
                   </div>
+
                 </div>
               </div>
             </div>
@@ -184,6 +170,12 @@ export default {
           },
         ];
       }
+    },
+    timeSlotIsEmpty() {
+      return this.timeSlot.length == 0;
+    },
+    timeSlotRequestIsEmpty() {
+      return this.status == 404;
     },
   },
 };

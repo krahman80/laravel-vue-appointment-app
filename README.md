@@ -58,10 +58,13 @@ or
 * create doctor details
 * create doctor detail page/component
 * create doctor time slot item
+* validate requested date, show warning less than today date (done in calendar side)
+* handle axios request error on doctor list page (when id not found redirect to 404 page)
+* handle axios timeslot request error on doctor show page
 
 # Not Completed To Do
-* validate requested date, show warning less than today date
-* handle axios request error on doctor list page
-* handle axios request error on doctor show page
+* add id to timeslot 
+* when submit booking validate booking request, prevent double booking on the same doctor
+* update schedule request query by filtering booked timeslot
 
 
