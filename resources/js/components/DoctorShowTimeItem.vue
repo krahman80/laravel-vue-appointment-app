@@ -54,22 +54,6 @@ export default {
     formatTime(timeSlot) {
       return String(timeSlot).substring(0, timeSlot.length - 3);
     },
-    convertDate(date) {
-      var yyyy = date.getFullYear().toString();
-      var mm = (date.getMonth() + 1).toString();
-      var dd = date.getDate().toString();
-
-      var mmChars = mm.split("");
-      var ddChars = dd.split("");
-
-      return (
-        yyyy +
-        "-" +
-        (mmChars[1] ? mm : "0" + mmChars[0]) +
-        "-" +
-        (ddChars[1] ? dd : "0" + ddChars[0])
-      );
-    },
     submitAppointmentTime() {
       // axios request
       //       axios.post("https://reqres.in/api/login", {
@@ -85,7 +69,7 @@ export default {
       console.log(
         `schedule id: ${this.selectedId}, doctor id: ${
           this.$route.params.id
-        }, today : ${this.convertDate(new Date())}`
+        }, today : ${this.$moment(new Date()).format("YYYY-MM-DD")}`
       );
       // this.timeSlot = null;
       // emit parent value

@@ -139,30 +139,13 @@ export default {
     onClickDay(day) {
       this.timeSlot = [];
       this.status = null;
-      const dayString = this.convertDate(day.date);
+      const dayString = this.$moment(day.date).format("YYYY-MM-DD");
       const url = `/api/doctors/${this.$route.params.id}/schedule/${dayString}`;
-      //make axios request
       axios
         .get(url)
         .then((response) => (this.timeSlot = response.data.data))
         .catch((error) => (this.status = error.response.status))
         .then(() => (this.isInitial = false));
-    },
-    convertDate(date) {
-      var yyyy = date.getFullYear().toString();
-      var mm = (date.getMonth() + 1).toString();
-      var dd = date.getDate().toString();
-
-      var mmChars = mm.split("");
-      var ddChars = dd.split("");
-
-      return (
-        yyyy +
-        "-" +
-        (mmChars[1] ? mm : "0" + mmChars[0]) +
-        "-" +
-        (ddChars[1] ? dd : "0" + ddChars[0])
-      );
     },
   },
   computed: {

@@ -64,11 +64,12 @@ or
 * validate requested date, show warning less than today date (laravel request validate)
 * add id to timeslot 
 * when submit booking validate booking request, prevent double booking on the same doctor
+* install moment js
+* add moment js to global vue attributes
 
 # Not Completed To Do
 * handle 404 error
 * axios post request
-* install moment js
 * install vuex
 * add login and register
 * update schedule request query by filtering booked timeslot

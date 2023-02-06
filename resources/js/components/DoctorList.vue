@@ -68,7 +68,7 @@ export default {
   created() {
     this.isLoading = true;
 
-    const result = axios.get("/api/doctors").then((result) => {
+    axios.get("/api/doctors").then((result) => {
       this.doctors = result.data.data;
       this.isLoading = false;
       // this.doctors.push({ name: "X", email: "x" });
