@@ -50,6 +50,6 @@ class User extends Authenticatable
 
     public function appointments() 
     {
-        return this->belongsToMany(Schedule::class)->withPivot('status')->withTimestamps();
+        return $this->belongsToMany(Schedule::class, 'appointments')->withPivot('status')->withTimestamps();
     }
 }

@@ -38,6 +38,7 @@
                     :attributes="attributes"
                     :min-date="new Date()"
                     @dayclick="onClickDay"
+                    :key="componentKey"
                   ></vc-calendar>
                 </div>
 
@@ -53,9 +54,16 @@
                     >
                       Schedule not available!
                     </p>
+                    <p
+                      v-if="beforeInitialRequest"
+                      class="text-muted"
+                    >Click Calendar to show schedule!</p>
                   </div>
                   <div v-else>
-                    <doctor-show-time-item v-bind:time-slot="timeSlot"></doctor-show-time-item>
+                    <doctor-show-time-item
+                      v-bind:time-slot="timeSlot"
+                      @reloadTimeSlot="reloadTimeSlot"
+                    ></doctor-show-time-item>
                   </div>
 
                 </div>
@@ -90,11 +98,13 @@ export default {
   },
   data() {
     return {
+      componentKey: 0,
       doctor: null,
       schedules: null,
       isLoading: false,
       timeSlot: [],
       status: null,
+      isInitial: true,
     };
   },
   created() {
@@ -120,6 +130,12 @@ export default {
       });
   },
   methods: {
+    reloadTimeSlot() {
+      // console.log("we are sure");
+      this.componentKey += 1;
+      this.timeSlot = [];
+      this.isInitial = true;
+    },
     onClickDay(day) {
       this.timeSlot = [];
       this.status = null;
@@ -129,7 +145,8 @@ export default {
       axios
         .get(url)
         .then((response) => (this.timeSlot = response.data.data))
-        .catch((error) => (this.status = error.response.status));
+        .catch((error) => (this.status = error.response.status))
+        .then(() => (this.isInitial = false));
     },
     convertDate(date) {
       var yyyy = date.getFullYear().toString();
@@ -172,10 +189,14 @@ export default {
       }
     },
     timeSlotIsEmpty() {
-      return this.timeSlot.length == 0;
+      // return this.timeSlot.length == 0;
+      return Array.isArray(this.timeSlot) && !this.timeSlot.length;
     },
     timeSlotRequestIsEmpty() {
-      return this.status == 404;
+      return this.status === 404 || this.status === 422;
+    },
+    beforeInitialRequest() {
+      return this.isInitial === true;
     },
   },
 };

@@ -20,6 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('doctors', DoctorController::class)->only(['index','show']);
-Route::get('doctors/{id}/schedule', [DoctorSchedulesController::class, 'getDate'])->name('doctors.shedule');
-Route::get('doctors/{id}/schedule/{time}', [DoctorSchedulesController::class, 'getTime'])->name('doctors.schedule.time');
+Route::apiResource('/doctors', DoctorController::class)->only(['index','show']);
+Route::get('/doctors/{id}/schedule', [DoctorSchedulesController::class, 'getDate'])->name('doctors.shedule');
+Route::get('/doctors/{id}/schedule/{time}', [DoctorSchedulesController::class, 'getTime'])->name('doctors.schedule.time');
+Route::post('/doctors/appointment', [DoctorSchedulesController::class, 'store'])->name('doctors.appointment.store');

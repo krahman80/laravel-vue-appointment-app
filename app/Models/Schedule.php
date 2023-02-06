@@ -16,6 +16,6 @@ class Schedule extends Model
 
     public function appointments() 
     {
-        return this->belongsToMany(User::class)->withPivot('status')->withTimestamps();
+        return $this->belongsToMany(User::class, 'appointments')->withPivot('status')->withTimestamps();
     }
 }

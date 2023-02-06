@@ -2168,11 +2168,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   },
   data: function data() {
     return {
+      componentKey: 0,
       doctor: null,
       schedules: null,
       isLoading: false,
       timeSlot: [],
-      status: null
+      status: null,
+      isInitial: true
     };
   },
   created: function created() {
@@ -2193,6 +2195,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     });
   },
   methods: {
+    reloadTimeSlot: function reloadTimeSlot() {
+      // console.log("we are sure");
+      this.componentKey += 1;
+      this.timeSlot = [];
+      this.isInitial = true;
+    },
     onClickDay: function onClickDay(day) {
       var _this2 = this;
       this.timeSlot = [];
@@ -2204,6 +2212,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         return _this2.timeSlot = response.data.data;
       })["catch"](function (error) {
         return _this2.status = error.response.status;
+      }).then(function () {
+        return _this2.isInitial = false;
       });
     },
     convertDate: function convertDate(date) {
@@ -2238,10 +2248,14 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       }
     },
     timeSlotIsEmpty: function timeSlotIsEmpty() {
-      return this.timeSlot.length == 0;
+      // return this.timeSlot.length == 0;
+      return Array.isArray(this.timeSlot) && !this.timeSlot.length;
     },
     timeSlotRequestIsEmpty: function timeSlotRequestIsEmpty() {
-      return this.status == 404;
+      return this.status === 404 || this.status === 422;
+    },
+    beforeInitialRequest: function beforeInitialRequest() {
+      return this.isInitial === true;
     }
   }
 });
@@ -2264,16 +2278,37 @@ __webpack_require__.r(__webpack_exports__);
     timeSlot: Array
   },
   data: function data() {
-    return {};
+    return {
+      selectedId: null
+    };
   },
   computed: {
-    timeSlotIsEmpty: function timeSlotIsEmpty() {
-      return Array.isArray(this.timeSlot) && !this.timeSlot.length;
+    // radioSelected() {
+    // return Array.isArray(this.timeSlot) && !this.timeSlot.length;
+    // },
+    radioSelected: function radioSelected() {
+      return this.selectedId === null;
     }
   },
   methods: {
     formatTime: function formatTime(timeSlot) {
       return String(timeSlot).substring(0, timeSlot.length - 3);
+    },
+    convertDate: function convertDate(date) {
+      var yyyy = date.getFullYear().toString();
+      var mm = (date.getMonth() + 1).toString();
+      var dd = date.getDate().toString();
+      var mmChars = mm.split("");
+      var ddChars = dd.split("");
+      return yyyy + "-" + (mmChars[1] ? mm : "0" + mmChars[0]) + "-" + (ddChars[1] ? dd : "0" + ddChars[0]);
+    },
+    submitAppointmentTime: function submitAppointmentTime() {
+      // axios request
+      // reload calendar component on success request
+      console.log("schedule id: ".concat(this.selectedId, ", doctor id: ").concat(this.$route.params.id, ", today : ").concat(this.convertDate(new Date())));
+      // this.timeSlot = null;
+      // emit parent value
+      this.$emit("reloadTimeSlot");
     }
   }
 });
@@ -2524,6 +2559,7 @@ var render = function render() {
   }, [_c("h5", {
     staticClass: "text-muted mb-3 text-center"
   }, [_vm._v("Calendar")]), _vm._v(" "), _c("vc-calendar", {
+    key: _vm.componentKey,
     attrs: {
       attributes: _vm.attributes,
       "min-date": new Date()
@@ -2539,9 +2575,14 @@ var render = function render() {
     staticClass: "text-muted mb-3"
   }, [_vm._v("Available Schedule")]), _vm._v(" "), _vm.timeSlotIsEmpty ? _c("div", [_vm.timeSlotRequestIsEmpty ? _c("p", {
     staticClass: "text-success"
-  }, [_vm._v("\n                    Schedule not available!\n                  ")]) : _vm._e()]) : _c("div", [_c("doctor-show-time-item", {
+  }, [_vm._v("\n                    Schedule not available!\n                  ")]) : _vm._e(), _vm._v(" "), _vm.beforeInitialRequest ? _c("p", {
+    staticClass: "text-muted"
+  }, [_vm._v("Click Calendar to show schedule!")]) : _vm._e()]) : _c("div", [_c("doctor-show-time-item", {
     attrs: {
       "time-slot": _vm.timeSlot
+    },
+    on: {
+      reloadTimeSlot: _vm.reloadTimeSlot
     }
   })], 1)])])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-lg-3 col-md-12 mb-2"
@@ -2575,23 +2616,41 @@ var render = function render() {
     }, [_c("div", {
       staticClass: "form-check"
     }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: _vm.selectedId,
+        expression: "selectedId"
+      }],
       staticClass: "form-check-input",
       attrs: {
         type: "radio",
-        name: "flexRadioDefault"
+        name: "timeSlot"
+      },
+      domProps: {
+        value: slot.id,
+        checked: _vm._q(_vm.selectedId, slot.id)
+      },
+      on: {
+        change: function change($event) {
+          _vm.selectedId = slot.id;
+        }
       }
     }), _vm._v(" "), _c("label", {
       staticClass: "form-check-label",
       attrs: {
-        "for": "flexRadioDefault1"
+        "for": "timeSlot"
       }
     }, [_vm._v("\n        " + _vm._s(_vm.formatTime(slot.start_time)) + " - " + _vm._s(_vm.formatTime(slot.end_time)) + "\n      ")])])]);
   }), _vm._v(" "), _c("div", {
-    staticClass: "form-group"
+    staticClass: "form-group mt-3"
   }, [_c("button", {
     staticClass: "btn btn-secondary btn-sm w-auto",
     attrs: {
-      disabled: _vm.timeSlotIsEmpty
+      disabled: _vm.radioSelected
+    },
+    on: {
+      click: _vm.submitAppointmentTime
     }
   }, [_vm._v("Submit")])])], 2);
 };
