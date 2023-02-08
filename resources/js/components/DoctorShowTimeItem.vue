@@ -72,8 +72,8 @@ export default {
         }, today : ${this.$moment(new Date()).format("YYYY-MM-DD")}`
       );
       // this.timeSlot = null;
-      // emit parent value
-      this.$emit("reloadTimeSlot");
+      // if axios success emit to parent value
+      this.$emit("reloadDoctorShow");
     },
   },
 };

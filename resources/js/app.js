@@ -6,13 +6,14 @@ import moment from "moment";
 import VueRouter from "vue-router";
 import router from "./routes";
 import Index from "./Index";
-
-//add momment into property of vue
-Vue.prototype.$moment = moment;
+import Error404 from "./components/shared/Error404";
 
 window.Vue = require("vue").default;
 Vue.use(VueRouter);
 Vue.use(VCalendar, { componentPrefix: 'vc', });
+//add momment into property of vue
+Vue.prototype.$moment = moment;
+Vue.component("error-404", Error404);
 
 const app = new Vue({
     el: "#app",

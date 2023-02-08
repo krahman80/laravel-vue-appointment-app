@@ -2,7 +2,6 @@ import VueRouter from "vue-router";
 import DoctorList from "./components/DoctorList";
 import DoctorShow from "./components/DoctorShow";
 import AboutComponent from "./components/AboutComponent";
-import Error404 from "./components/Error404";
 
 const routes = [
     {
@@ -19,17 +18,7 @@ const routes = [
         path: "/about",
         name: "about",
         component: AboutComponent,
-    },
-    {
-        path: '/404',
-        name: "404",
-        component: Error404
-    },
-    {
-        path: '\*',
-        redirect: '/404'
-    },
-
+    }
 ];
 
 const router = new VueRouter({
