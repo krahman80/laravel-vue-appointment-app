@@ -2175,7 +2175,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       errStatus: null,
       isInitial: true,
       componentKey: 0,
-      error: false
+      error: false,
+      outstandingAppoitment: null
     };
   },
   created: function created() {
@@ -2196,11 +2197,19 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     });
   },
   methods: {
-    reloadDoctorShow: function reloadDoctorShow() {
+    reloadDoctorShow: function reloadDoctorShow(test) {
       // console.log("we are sure");
       this.componentKey += 1;
       this.timeSlot = [];
       this.isInitial = true;
+      if (test == 1) {
+        this.outstandingAppoitment = true;
+      } else if (test == 2) {
+        this.outstandingAppoitment = false;
+      } else {
+        this.outstandingAppoitment = null;
+      }
+      // console.log(test);
     },
     onClickDay: function onClickDay(day) {
       var _this2 = this;
@@ -2248,6 +2257,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     },
     beforeInitialRequest: function beforeInitialRequest() {
       return this.isInitial === true;
+    },
+    isError: function isError() {
+      return this.error === true;
     }
   }
 });
@@ -2272,8 +2284,10 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       selectedId: null
+      // error: false,
     };
   },
+
   computed: {
     // radioSelected() {
     // return Array.isArray(this.timeSlot) && !this.timeSlot.length;
@@ -2287,21 +2301,41 @@ __webpack_require__.r(__webpack_exports__);
       return String(timeSlot).substring(0, timeSlot.length - 3);
     },
     submitAppointmentTime: function submitAppointmentTime() {
+      var _this = this;
       // axios request
-      //       axios.post("https://reqres.in/api/login", {
-      //       email: email,
-      //       password: password
-      //     })
-      //     .then((response) => {
-      //       console.log(response);
-      //     });
-      // });
+      var postData = {
+        doctor_id: this.$route.params.id,
+        date: this.$moment(new Date()).format("YYYY-MM-DD"),
+        patient_id: "3",
+        schedule_id: String(this.selectedId)
+      };
+      axios.post("/api/doctors/appointment", postData).then(function (response) {
+        console.log(response.status);
+        _this.$emit("reloadDoctorShow", 2);
+      })["catch"](function (err) {
+        // console.log(`you have error : ${err.response.status}`);
+        // console.log(err);
+        // console.log(postData);
+        if (err.response && err.response.status && err.response.status === 422) {
+          _this.$emit("reloadDoctorShow", 1);
+        }
+      }).then(function () {
+        _this.$emit("reloadDoctorShow", 0);
+        // if (this.error === true) {
+        //   console.log(
+        //     "you have outstanding appoitment pleace cek your appointment page!"
+        //   );
+        // }
+      });
 
       // reload calendar component on success request
-      console.log("schedule id: ".concat(this.selectedId, ", doctor id: ").concat(this.$route.params.id, ", today : ").concat(this.$moment(new Date()).format("YYYY-MM-DD")));
+      // console.log(
+      //   `schedule id: ${this.selectedId}, doctor id: ${
+      //     this.$route.params.id
+      //   }, today : ${this.$moment(new Date()).format("YYYY-MM-DD")}`
+      // );
       // this.timeSlot = null;
       // if axios success emit to parent value
-      this.$emit("reloadDoctorShow");
     }
   }
 });
@@ -2443,13 +2477,13 @@ var render = function render() {
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "row justify-content-center"
-  }, [_c("div", {
+  }, [_vm.isLoading ? _c("div", {
+    staticClass: "text-muted text-center"
+  }, [_vm._v("\n    data is loading ...\n  ")]) : _c("div", {
     staticClass: "col-md-12"
-  }, [_c("h1", {
+  }, [_c("div", [_c("h1", {
     staticClass: "h3 my-3"
-  }, [_vm._v("Doctor List")]), _vm._v(" "), _vm.isLoading ? _c("div", {
-    staticClass: "row"
-  }, [_c("p", [_vm._v("data is loading...")])]) : _c("div", _vm._l(_vm.rows, function (row) {
+  }, [_vm._v("Doctor List")]), _vm._v(" "), _vm._l(_vm.rows, function (row) {
     return _c("div", {
       key: "row" + row,
       staticClass: "row mb-4"
@@ -2464,7 +2498,7 @@ var render = function render() {
         staticClass: "col"
       });
     })], 2);
-  }), 0)])]);
+  })], 2)])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -2527,23 +2561,65 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_vm.error === true ? _c("error-404") : _c("div", {
+  return _c("div", [_vm.isError ? _c("error-404") : _c("div", [_c("div", [_vm.isLoading ? _c("div", {
+    staticClass: "text-muted text-center"
+  }, [_vm._v("\n        data is loading ...\n      ")]) : _c("div", {
     staticClass: "row"
   }, [_c("div", {
     staticClass: "col-lg-9 col-md-12 mb-2"
   }, [_c("div", {
-    staticClass: "card"
-  }, [_vm.isLoading ? _c("div", {
-    staticClass: "card-body"
-  }, [_vm._v("\n          data is loading ...\n        ")]) : _c("div", {
-    staticClass: "card-body"
+    staticClass: "my-4"
   }, [_c("h4", {
-    staticClass: "card-title text-center"
+    staticClass: "text-center"
   }, [_vm._v(_vm._s(_vm.doctor.name))]), _vm._v(" "), _c("h6", {
-    staticClass: "card-subtitle mb-2 text-muted text-center"
-  }, [_vm._v(_vm._s(_vm.doctor.email))]), _vm._v(" "), _c("hr"), _vm._v(" "), _c("div", {
-    staticClass: "card-text p-3"
-  }, [_c("div", {
+    staticClass: "text-muted text-center"
+  }, [_vm._v(_vm._s(_vm.doctor.email))])]), _vm._v(" "), _c("div", {
+    staticClass: "card card-body p-3"
+  }, [_vm.outstandingAppoitment === true ? _c("div", {
+    staticClass: "alert alert-dismissible alert-warning"
+  }, [_c("button", {
+    staticClass: "btn-close",
+    attrs: {
+      type: "button",
+      "data-bs-dismiss": "alert"
+    },
+    on: {
+      click: function click($event) {
+        _vm.outstandingAppoitment = null;
+      }
+    }
+  }), _vm._v(" "), _c("h4", {
+    staticClass: "alert-heading"
+  }, [_vm._v("Booking failed!")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-0"
+  }, [_vm._v("You have an outstanding appoitment, "), _c("a", {
+    staticClass: "alert-link",
+    attrs: {
+      href: "#"
+    }
+  }, [_vm._v("cek your appointment page!")]), _vm._v(".")])]) : _vm._e(), _vm._v(" "), _vm.outstandingAppoitment === false ? _c("div", {
+    staticClass: "alert alert-dismissible alert-success"
+  }, [_c("button", {
+    staticClass: "btn-close",
+    attrs: {
+      type: "button",
+      "data-bs-dismiss": "alert"
+    },
+    on: {
+      click: function click($event) {
+        _vm.outstandingAppoitment = null;
+      }
+    }
+  }), _vm._v(" "), _c("h4", {
+    staticClass: "alert-heading"
+  }, [_vm._v("Booking success!")]), _vm._v(" "), _c("p", {
+    staticClass: "mb-0"
+  }, [_c("a", {
+    staticClass: "alert-link",
+    attrs: {
+      href: "#"
+    }
+  }, [_vm._v("cek your appointment page!")]), _vm._v(".")])]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "row"
   }, [_c("div", {
     staticClass: "col-lg-6 col-md-12 d-flex justify-content-center"
@@ -2577,9 +2653,9 @@ var render = function render() {
     on: {
       reloadDoctorShow: _vm.reloadDoctorShow
     }
-  })], 1)])])])])])])]), _vm._v(" "), _c("div", {
+  })], 1)])])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-lg-3 col-md-12 mb-2"
-  }, [_vm._v("\n      xxx\n\n    ")])])], 1);
+  }, [_vm._v("xxx")])])])])], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -2678,7 +2754,7 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "col-12"
   }, [_c("div", {
-    staticClass: "card card-body text-muted text-center"
+    staticClass: "text-muted text-center"
   }, [_vm._v("Unknoun error has occured, Please try again later!")])])]);
 }];
 render._withStripped = true;

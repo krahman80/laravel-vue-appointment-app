@@ -1,16 +1,18 @@
 <template>
   <div class="row justify-content-center">
-    <div class="col-md-12">
-      <h1 class="h3 my-3">Doctor List</h1>
+    <div
+      v-if="isLoading"
+      class="text-muted text-center"
+    >
+      data is loading ...
+    </div>
 
-      <div
-        class="row"
-        v-if="isLoading"
-      >
-        <p>data is loading...</p>
-      </div>
-      <div v-else>
-
+    <div
+      class="col-md-12"
+      v-else
+    >
+      <div>
+        <h1 class="h3 my-3">Doctor List</h1>
         <div
           class="row mb-4"
           v-for="row in rows"
@@ -32,6 +34,7 @@
 
       </div>
     </div>
+
   </div>
 
 </template>

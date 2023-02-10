@@ -1,41 +1,59 @@
 <template>
   <div>
-    <error-404 v-if="error === true"></error-404>
-    <div
-      v-else
-      class="row"
-    >
+    <error-404 v-if="isError"></error-404>
+    <div v-else>
       <!-- ga da error -->
-      <div class="col-lg-9 col-md-12 mb-2">
-        <div class="card">
+      <div>
+        <div
+          v-if="isLoading"
+          class="text-muted text-center"
+        >
+          data is loading ...
+        </div>
+        <div
+          v-else
+          class="row"
+        >
+          <div class="col-lg-9 col-md-12 mb-2">
 
-          <div
-            class="card-body"
-            v-if="isLoading"
-          >
-            data is loading ...
-          </div>
-          <div
-            class="card-body"
-            v-else
-          >
-            <h4 class="card-title text-center">{{ doctor.name }}</h4>
-            <h6 class="card-subtitle mb-2 text-muted text-center">{{ doctor.email }}</h6>
-            <hr>
-            <div class="card-text p-3">
-              <!-- <div class="alert alert-dismissible alert-success">
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="alert"
-              ></button>
-              <h4 class="alert-heading">Success!</h4>
-              <p class="mb-0">Best check yo self, you're not looking too good. <a
-                  href="#"
-                  class="alert-link"
-                >cek your appointment status</a>.</p>
-            </div> -->
+            <div class="my-4">
+              <h4 class="text-center">{{ doctor.name }}</h4>
+              <h6 class="text-muted text-center">{{ doctor.email }}</h6>
+            </div>
 
+            <div class="card card-body p-3">
+              <div
+                class="alert alert-dismissible alert-warning"
+                v-if="outstandingAppoitment===true"
+              >
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="alert"
+                  @click="outstandingAppoitment = null"
+                ></button>
+                <h4 class="alert-heading">Booking failed!</h4>
+                <p class="mb-0">You have an outstanding appoitment, <a
+                    href="#"
+                    class="alert-link"
+                  >cek your appointment page!</a>.</p>
+              </div>
+              <div
+                class="alert alert-dismissible alert-success"
+                v-if="outstandingAppoitment===false"
+              >
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="alert"
+                  @click="outstandingAppoitment = null"
+                ></button>
+                <h4 class="alert-heading">Booking success!</h4>
+                <p class="mb-0"><a
+                    href="#"
+                    class="alert-link"
+                  >cek your appointment page!</a>.</p>
+              </div>
               <div class="row">
                 <div class="col-lg-6 col-md-12 d-flex justify-content-center">
                   <div class="my-2">
@@ -75,23 +93,15 @@
                   </div>
                 </div>
               </div>
-              <!-- <div class="row mt-4">
-              <div class="col col-10 mx-auto">
-                
-              </div>
-
-            </div> -->
 
             </div>
 
           </div>
 
+          <div class="col-lg-3 col-md-12 mb-2">xxx</div>
         </div>
       </div>
-      <div class="col-lg-3 col-md-12 mb-2">
-        xxx
 
-      </div>
     </div>
 
   </div>
@@ -114,6 +124,7 @@ export default {
       isInitial: true,
       componentKey: 0,
       error: false,
+      outstandingAppoitment: null,
     };
   },
   created() {
@@ -145,11 +156,19 @@ export default {
       });
   },
   methods: {
-    reloadDoctorShow() {
+    reloadDoctorShow(test) {
       // console.log("we are sure");
       this.componentKey += 1;
       this.timeSlot = [];
       this.isInitial = true;
+      if (test == 1) {
+        this.outstandingAppoitment = true;
+      } else if (test == 2) {
+        this.outstandingAppoitment = false;
+      } else {
+        this.outstandingAppoitment = null;
+      }
+      // console.log(test);
     },
     onClickDay(day) {
       this.timeSlot = [];
@@ -201,6 +220,9 @@ export default {
     },
     beforeInitialRequest() {
       return this.isInitial === true;
+    },
+    isError() {
+      return this.error === true;
     },
   },
 };

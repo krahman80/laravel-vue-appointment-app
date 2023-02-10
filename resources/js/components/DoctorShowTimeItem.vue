@@ -40,6 +40,7 @@ export default {
   data() {
     return {
       selectedId: null,
+      // error: false,
     };
   },
   computed: {
@@ -56,24 +57,47 @@ export default {
     },
     submitAppointmentTime() {
       // axios request
-      //       axios.post("https://reqres.in/api/login", {
-      //       email: email,
-      //       password: password
-      //     })
-      //     .then((response) => {
-      //       console.log(response);
-      //     });
-      // });
+      const postData = {
+        doctor_id: this.$route.params.id,
+        date: this.$moment(new Date()).format("YYYY-MM-DD"),
+        patient_id: "3",
+        schedule_id: String(this.selectedId),
+      };
+      axios
+        .post(`/api/doctors/appointment`, postData)
+        .then((response) => {
+          console.log(response.status);
+          this.$emit("reloadDoctorShow", 2);
+        })
+        .catch((err) => {
+          // console.log(`you have error : ${err.response.status}`);
+          // console.log(err);
+          // console.log(postData);
+          if (
+            err.response &&
+            err.response.status &&
+            err.response.status === 422
+          ) {
+            this.$emit("reloadDoctorShow", 1);
+          }
+        })
+        .then(() => {
+          this.$emit("reloadDoctorShow", 0);
+          // if (this.error === true) {
+          //   console.log(
+          //     "you have outstanding appoitment pleace cek your appointment page!"
+          //   );
+          // }
+        });
 
       // reload calendar component on success request
-      console.log(
-        `schedule id: ${this.selectedId}, doctor id: ${
-          this.$route.params.id
-        }, today : ${this.$moment(new Date()).format("YYYY-MM-DD")}`
-      );
+      // console.log(
+      //   `schedule id: ${this.selectedId}, doctor id: ${
+      //     this.$route.params.id
+      //   }, today : ${this.$moment(new Date()).format("YYYY-MM-DD")}`
+      // );
       // this.timeSlot = null;
       // if axios success emit to parent value
-      this.$emit("reloadDoctorShow");
     },
   },
 };
