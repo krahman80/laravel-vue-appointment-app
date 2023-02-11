@@ -33,7 +33,7 @@
                   @click="outstandingAppoitment = null"
                 ></button>
                 <h4 class="alert-heading">Booking failed!</h4>
-                <p class="mb-0">You have an outstanding appoitment, <a
+                <p class="mb-0">You have an outstanding appointment, <a
                     href="#"
                     class="alert-link"
                   >cek your appointment page!</a>.</p>

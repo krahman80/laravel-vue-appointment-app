@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Schedule;
 use App\Models\User;
 use App\Http\Resources\DoctorScheduleCollection;
+use DB;
 
 class DoctorSchedulesController extends Controller
 {
@@ -38,7 +39,11 @@ class DoctorSchedulesController extends Controller
 
         // dd($data);
 
-        $query = Schedule::select('id', 'start_time', 'end_time')->where('user_id', $id)->where('date', $date)->get();
+        $query = Schedule::select('id', 'start_time', 'end_time')
+                ->where('user_id', $id)
+                ->where('date', $date)
+                ->whereNotIn('id', DB::table('appointments')->get()->pluck('schedule_id')->toArray())->get();
+
         if ($query->isEmpty()) {
             return response()->json(['data' => []], 404);
         }
@@ -82,6 +87,11 @@ class DoctorSchedulesController extends Controller
             $user = User::find($request->input('patient_id'));
             $schedule = Schedule::find($request->input('schedule_id'));
             $schedule->appointments()->attach($user, ['status' => '0']);
+
+            //if success update flag inside schedule to indicate that the schedule is booked
+
+
+            // on update or remove schedule remove the flag
 
             return response()->json(['data' => []], 200);
         }

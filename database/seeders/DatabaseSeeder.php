@@ -38,61 +38,68 @@ class DatabaseSeeder extends Seeder
         $patientRole->givePermissionTo('submit appointment request');
         $administratorRole->givePermissionTo(['approve appointment request', 'reject appointment request', 'edit doctor profile']);
 
-      
-        // create doctor
-        $doctorXXX = User::factory()->create([
-            'name' => 'doctorXXX',
-            'email' => 'doctorXXX@mail.com',
-        ]);
+        $docResult = User::factory(10)->create()->each(function($user) {
+            $user->assignRole('doctor');
+        });
 
-        $doctorXXX->assignRole('doctor');
+        
+        /**
+         * create doctor account and schedule
+         */
 
-        //create time slot for doctor
-        $timeSlotXXX = new TimeSlot('2023-03-01 08:30:00', '2023-03-01 12:00:00', 20);
-        $resultXXX = $timeSlotXXX->generate();
+        $str_start = date("Y-m-d 08:00",strtotime('tomorrow'));
+        $start = strtotime($str_start);
+        
+        $str_end = date("Y-m-d 09:00", strtotime('+2 months', strtotime($str_start)));
+        $end = strtotime($str_end);
 
-        foreach ($resultXXX as $value) {
-            Schedule::create([
-                'user_id' => $doctorXXX->id,
-                'date' => $value['date'],
-                'start_time' => $value['start_time'],
-                'end_time' => $value['end_time'],
-            ]);
+        // $start = strtotime('2/12/2023 07:00');
+        // $end = strtotime('3/23/2023 09:00');
+
+        $dateResult = array();
+        while ($start <= $end) {
+            if (date('N', $start) <= 5) {
+                $start_st = date('Y-m-d H:i', $start);
+                $end_st = date('Y-m-d H:i', $end);
+                $dateResult[] = [$start_st, $end_st];
+            }
+            $start += 86400;
         }
 
-        //create timeslot for doctor
-        $timeSlotXXX2 = new TimeSlot('2023-03-02 08:30:00', '2023-03-02 12:00:00', 20);
-        $resultXXX2 = $timeSlotXXX2->generate();
+        foreach($dateResult as $key => $val){
+            foreach ($docResult as $doc){
+                // echo $val[0] . "--" . $val[1] ."-".$doc."\n";
+                
+                //add time
+                $randStartTime = rand(0,2);
+                $randEndTime = $randStartTime + 2;
 
-        foreach ($resultXXX2 as $value) {
-            Schedule::create([
-                'user_id' => $doctorXXX->id,
-                'date' => $value['date'],
-                'start_time' => $value['start_time'],
-                'end_time' => $value['end_time'],
-            ]);
+                $initStart = date('Y-m-d H:i',strtotime('+'.$randStartTime.' hour',strtotime($val[0])));
+                $initEnd = date('Y-m-d H:i',strtotime('+'.$randEndTime.' hour',strtotime($val[1])));
+
+                //generate new timeslot
+                $timeSlotXXX = new TimeSlot($initStart, $initEnd, 20);
+                $resultXXX = $timeSlotXXX->generate();
+                
+                foreach($resultXXX as $fin) {
+                    
+                    Schedule::create([
+                        'user_id' => $doc->id,
+                        'date' => $fin['date'],
+                        'start_time' => $fin['start_time'],
+                        'end_time' => $fin['end_time'],
+                    ]);
+
+                }
+
+            }
+            
         }
 
-        //create new doctor
-        $doctorYYY = User::factory()->create([
-            'name' => 'doctorYYY',
-            'email' => 'doctorYYY@mail.com',
-        ]);
 
-        $doctorYYY->assignRole('doctor');
-        $timeSlotYYY = new TimeSlot('2023-03-01 12:30:00', '2023-03-01 17:00:00', 20);
-        $resultYYY = $timeSlotYYY->generate();
-
-        foreach ($resultYYY as $value) {
-            Schedule::create([
-                'user_id' => $doctorYYY->id,
-                'date' => $value['date'],
-                'start_time' => $value['start_time'],
-                'end_time' => $value['end_time'],
-            ]);
-        }
-
-        // create user
+        /**
+         * create other user
+         */
         $patientYYY = User::factory()->create([
             'name' => 'userYYY',
             'email' => 'userYYY@mail.com',
@@ -117,4 +124,5 @@ class DatabaseSeeder extends Seeder
         $administrator->givePermissionTo(['approve appointment request', 'reject appointment request', 'edit doctor profile']);
 
     }
+
 }

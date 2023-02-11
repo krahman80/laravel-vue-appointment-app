@@ -69,9 +69,12 @@ or
 * handle 404 error / other error
 * install vuex
 * axios post request save
-
-# Not Completed To Do
 * update schedule request query by filtering booked timeslot
 * add more data to schedule seeder
-* add login and register
 
+# Not Completed To Do
+* add search bar
+* add last search to global state vuex
+* add login 
+* add register
+* only login patient can book an appointment 
