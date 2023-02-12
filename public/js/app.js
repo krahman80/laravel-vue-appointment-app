@@ -2091,7 +2091,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      keyword: "",
       isLoading: false,
+      isError: false,
       doctors: null,
       columns: 3
     };
@@ -2099,6 +2101,9 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     rows: function rows() {
       return this.doctors === null ? 0 : Math.ceil(this.doctors.length / this.columns);
+    },
+    noData: function noData() {
+      return this.doctors.length === 0;
     }
   },
   methods: {
@@ -2107,16 +2112,23 @@ __webpack_require__.r(__webpack_exports__);
     },
     placeHolederInRow: function placeHolederInRow(row) {
       return this.columns - this.doctorsInRow(row).length;
+    },
+    searchDoctor: function searchDoctor() {
+      var _this = this;
+      this.isLoading = true;
+      axios.get("/api/doctors?keyword=".concat(this.keyword)).then(function (result) {
+        _this.doctors = result.data.data;
+        _this.isLoading = false;
+        // this.doctors.push({ name: "X", email: "x" });
+      })["catch"](function (err) {
+        if (err.response && err.response.status) {
+          _this.isError = true;
+        }
+      });
     }
   },
   created: function created() {
-    var _this = this;
-    this.isLoading = true;
-    axios.get("/api/doctors").then(function (result) {
-      _this.doctors = result.data.data;
-      _this.isLoading = false;
-      // this.doctors.push({ name: "X", email: "x" });
-    });
+    this.searchDoctor();
   }
 });
 
@@ -2481,9 +2493,54 @@ var render = function render() {
     staticClass: "text-muted text-center"
   }, [_vm._v("\n    data is loading ...\n  ")]) : _c("div", {
     staticClass: "col-md-12"
-  }, [_c("div", [_c("h1", {
+  }, [_c("div", [_c("div", {
+    staticClass: "row py-3"
+  }, [_c("div", {
+    staticClass: "col-8 mx-auto"
+  }, [_c("div", {
+    staticClass: "p-1 bg-white rounded rounded-pill shadow-sm mb-4"
+  }, [_c("div", {
+    staticClass: "input-group"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.keyword,
+      expression: "keyword"
+    }],
+    staticClass: "form-control border-0 bg-white shadow-none",
+    attrs: {
+      type: "search",
+      placeholder: "What are you search for?",
+      "aria-describedby": "button-addon1"
+    },
+    domProps: {
+      value: _vm.keyword
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.keyword = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _c("div", {
+    staticClass: "input-group-append"
+  }, [_c("button", {
+    staticClass: "btn btn-secondary text-light rounded rounded-pill",
+    attrs: {
+      id: "button-addon1",
+      type: "submit"
+    },
+    on: {
+      click: _vm.searchDoctor
+    }
+  }, [_vm._v("Search")])])])])])]), _vm._v(" "), _c("h1", {
     staticClass: "h3 my-3"
-  }, [_vm._v("Doctor List")]), _vm._v(" "), _vm._l(_vm.rows, function (row) {
+  }, [_vm._v("Doctor List")]), _vm._v(" "), _vm.noData ? _c("div", {
+    staticClass: "row mb-4"
+  }, [_c("div", {
+    staticClass: "col-12 fs-5"
+  }, [_vm._v("no record found!")])]) : _c("div", _vm._l(_vm.rows, function (row) {
     return _c("div", {
       key: "row" + row,
       staticClass: "row mb-4"
@@ -2498,7 +2555,7 @@ var render = function render() {
         staticClass: "col"
       });
     })], 2);
-  })], 2)])]);
+  }), 0)])])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -2592,7 +2649,7 @@ var render = function render() {
     staticClass: "alert-heading"
   }, [_vm._v("Booking failed!")]), _vm._v(" "), _c("p", {
     staticClass: "mb-0"
-  }, [_vm._v("You have an outstanding appoitment, "), _c("a", {
+  }, [_vm._v("You have an outstanding appointment, "), _c("a", {
     staticClass: "alert-link",
     attrs: {
       href: "#"

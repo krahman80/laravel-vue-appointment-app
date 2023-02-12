@@ -59,7 +59,7 @@ or
 * create doctor detail page/component
 * create doctor time slot item
 * validate requested date, show warning less than today date (done in calendar side)
-* handle axios request error on doctor list page (when id not found redirect to 404 page)
+* handle axios request error on doctor list page (when id not found show 404 message)
 * handle axios timeslot request error on doctor show page
 * validate requested date, show warning less than today date (laravel request validate)
 * add id to timeslot 
@@ -71,10 +71,15 @@ or
 * axios post request save
 * update schedule request query by filtering booked timeslot
 * add more data to schedule seeder
+* add search bar
+* update api request including keyword from search bar
 
 # Not Completed To Do
-* add search bar
 * add last search to global state vuex
+* fixed isLoading, isError order on vue page
+* add 404 page
+* add polymorphic one relation to user
+* add status field to schedule to make eazy showing / not showing booked appointment
 * add login 
 * add register
 * only login patient can book an appointment 

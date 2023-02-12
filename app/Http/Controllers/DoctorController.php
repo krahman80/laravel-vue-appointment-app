@@ -14,9 +14,15 @@ class DoctorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return new DoctorCollection(User::role('doctor')->get());
+        // api/doctors?keyword=ma
+        $query = User::role('doctor');
+        $query->when(request('keyword') != null, function ($q) {
+            return $q->where('name', 'like', '%'.request('keyword').'%');
+        });
+        $result = $query->get();
+        return new DoctorCollection($result);
     }
 
     /**
