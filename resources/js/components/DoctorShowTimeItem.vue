@@ -67,7 +67,7 @@ export default {
         .post(`/api/doctors/appointment`, postData)
         .then((response) => {
           console.log(response.status);
-          this.$emit("reloadDoctorShow", 2);
+          this.$emit("reloadDoctorShow", response.status);
         })
         .catch((err) => {
           // console.log(`you have error : ${err.response.status}`);
@@ -78,16 +78,9 @@ export default {
             err.response.status &&
             err.response.status === 422
           ) {
-            this.$emit("reloadDoctorShow", 1);
+            console.log(err.response.status);
+            this.$emit("reloadDoctorShow", err.response.status);
           }
-        })
-        .then(() => {
-          this.$emit("reloadDoctorShow", 0);
-          // if (this.error === true) {
-          //   console.log(
-          //     "you have outstanding appoitment pleace cek your appointment page!"
-          //   );
-          // }
         });
 
       // reload calendar component on success request

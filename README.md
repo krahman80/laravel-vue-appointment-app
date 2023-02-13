@@ -73,13 +73,15 @@ or
 * add more data to schedule seeder
 * add search bar
 * update api request including keyword from search bar
+* add last search to global state vuex
+* add more random result in seeder
+* change emmit parameter
+* add status field to schedule to reduce query load
 
 # Not Completed To Do
-* add last search to global state vuex
 * fixed isLoading, isError order on vue page
-* add 404 page
+* add 404 page when url not found
 * add polymorphic one relation to user
-* add status field to schedule to make eazy showing / not showing booked appointment
 * add login 
 * add register
 * only login patient can book an appointment 

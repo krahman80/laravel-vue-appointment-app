@@ -32,7 +32,7 @@
                   data-bs-dismiss="alert"
                   @click="outstandingAppoitment = null"
                 ></button>
-                <h4 class="alert-heading">Booking failed!</h4>
+                <h4 class="alert-heading">Booking not successful!</h4>
                 <p class="mb-0">You have an outstanding appointment, <a
                     href="#"
                     class="alert-link"
@@ -49,10 +49,10 @@
                   @click="outstandingAppoitment = null"
                 ></button>
                 <h4 class="alert-heading">Booking success!</h4>
-                <p class="mb-0"><a
+                <p class="mb-0">you have booked and appointment on <a
                     href="#"
                     class="alert-link"
-                  >cek your appointment page!</a>.</p>
+                  >yyyy-mm-dd, hour:minutes - hour:minutes!</a>.</p>
               </div>
               <div class="row">
                 <div class="col-lg-6 col-md-12 d-flex justify-content-center">
@@ -86,7 +86,7 @@
                     <div v-else>
                       <doctor-show-time-item
                         v-bind:time-slot="timeSlot"
-                        @reloadDoctorShow="reloadDoctorShow"
+                        @reloadDoctorShow="reloadDoctorShow($event)"
                       ></doctor-show-time-item>
                     </div>
 
@@ -156,15 +156,15 @@ export default {
       });
   },
   methods: {
-    reloadDoctorShow(test) {
-      // console.log("we are sure");
+    reloadDoctorShow(status) {
+      // console.log(status);
       this.componentKey += 1;
       this.timeSlot = [];
       this.isInitial = true;
-      if (test == 1) {
-        this.outstandingAppoitment = true;
-      } else if (test == 2) {
+      if (status == 200) {
         this.outstandingAppoitment = false;
+      } else if (status == 422) {
+        this.outstandingAppoitment = true;
       } else {
         this.outstandingAppoitment = null;
       }

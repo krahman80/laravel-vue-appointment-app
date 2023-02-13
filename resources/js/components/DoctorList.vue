@@ -82,7 +82,7 @@ export default {
   },
   data() {
     return {
-      keyword: "",
+      keyword: this.$store.state.keyword,
       isLoading: false,
       isError: false,
       doctors: null,
@@ -108,6 +108,10 @@ export default {
     },
     searchDoctor() {
       this.isLoading = true;
+
+      // console.log(this.$store);
+      this.$store.commit("lastSearch", this.keyword);
+
       axios
         .get(`/api/doctors?keyword=${this.keyword}`)
         .then((result) => {
