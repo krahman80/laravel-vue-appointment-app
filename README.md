@@ -45,8 +45,9 @@ or
 
 
 # Completed To Do
+* install debugbar (composer require barryvdh/laravel-debugbar --dev)
 * create user.
-* install spatie/laravel-permission (rbac).
+* install rbac (composer require spatie/laravel-permission).
 * create schedule Model and table
 * seed user, doctor, patient, admin. 
 * seed permission and roles

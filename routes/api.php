@@ -1,10 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\DoctorSchedulesController;
-use App\Models\Schedule;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,11 +15,7 @@ use App\Models\Schedule;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::apiResource('/doctors', DoctorController::class)->only(['index','show']);
+Route::apiResource('/doctors', DoctorController::class)->only(['index', 'show']);
 Route::get('/doctors/{id}/schedule', [DoctorSchedulesController::class, 'getDate'])->name('doctors.shedule');
 Route::get('/doctors/{id}/schedule/{time}', [DoctorSchedulesController::class, 'getTime'])->name('doctors.schedule.time');
 Route::post('/doctors/appointment', [DoctorSchedulesController::class, 'store'])->name('doctors.appointment.store');
