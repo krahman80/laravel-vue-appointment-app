@@ -79,9 +79,10 @@ or
 * add status field to schedule to reduce query load
 
 # Not Completed To Do
+* install laravel sanctum
+* add authentication mecanism
+* add register
 * fixed isLoading, isError order on vue page
 * add 404 page when url not found
 * add polymorphic one relation to user
-* add login 
-* add register
 * only login patient can book an appointment 

@@ -2118,7 +2118,7 @@ __webpack_require__.r(__webpack_exports__);
       this.isLoading = true;
 
       // console.log(this.$store);
-      this.$store.commit("lastSearch", this.keyword);
+      this.$store.dispatch("setLastKeyword", this.keyword);
       axios.get("/api/doctors?keyword=".concat(this.keyword)).then(function (result) {
         _this.doctors = result.data.data;
         _this.isLoading = false;
@@ -2863,6 +2863,9 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_6__["default"]({
   store: store,
   components: {
     "index": _Index__WEBPACK_IMPORTED_MODULE_3__["default"]
+  },
+  beforeCreate: function beforeCreate() {
+    this.$store.dispatch("getLastKeyword");
   }
 });
 
@@ -2964,8 +2967,20 @@ __webpack_require__.r(__webpack_exports__);
     keyword: ""
   },
   mutations: {
-    lastSearch: function lastSearch(state, payload) {
+    lastKeyword: function lastKeyword(state, payload) {
       state.keyword = payload;
+    }
+  },
+  actions: {
+    setLastKeyword: function setLastKeyword(context, payload) {
+      context.commit('lastKeyword', payload);
+      localStorage.setItem('lastKeyword', JSON.stringify(payload));
+    },
+    getLastKeyword: function getLastKeyword(context) {
+      var lastKeyword = localStorage.getItem('lastKeyword');
+      if (lastKeyword) {
+        context.commit('lastKeyword', JSON.parse(lastKeyword));
+      }
     }
   }
 });
