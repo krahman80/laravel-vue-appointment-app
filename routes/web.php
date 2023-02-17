@@ -1,8 +1,9 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoginController;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +16,8 @@ use Illuminate\Support\Facades\Request;
 |
 */
 
-Route::post('/login', [LoginController::class, 'authenticated']);
+// Route::post('/login', [LoginController::class, 'authenticated']);
+Auth::routes(['reset' => false]);
 
 Route::middleware('auth')->get('/user', function (Request $request) {
     return $request->user();

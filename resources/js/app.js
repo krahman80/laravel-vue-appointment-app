@@ -31,16 +31,12 @@ const app = new Vue({
         this.$store.dispatch("getLastKeyword");
 
         // make auth request
-        // axios.get("/sanctum/csrf-cookie");
-        // axios.post("/login", {
-        //     email: "xxx",
-        //     password: "xxx"
-        // }).catch(err => { console.log(err.response.status); });
-        axios.get("/sanctum/csrf-cookie").then(response => {
-            axios.post("/login", {
-                email: "xxx",
-                password: "xxx"
-            }).catch(err => { console.log(err.response.code); });
-        });
+        // axios.get("/sanctum/csrf-cookie").then(() => {
+        //     axios.post("/login", {
+        //         email: "xxx",
+        //         password: "password"
+        //     }).then(() => axios.get("/user")).catch(err => { console.log(err.message); });
+        // });
+
     }
 });
