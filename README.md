@@ -78,11 +78,11 @@ or
 * add more random result in seeder
 * change emmit parameter
 * add status field to schedule to reduce query load
+* install laravel sanctum
 
 # Not Completed To Do
-* install laravel sanctum
-* add authentication mecanism
-* add register
+* add login page
+* add register page
 * fixed isLoading, isError order on vue page
 * add 404 page when url not found
 * add polymorphic one relation to user
