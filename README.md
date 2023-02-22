@@ -79,9 +79,9 @@ or
 * change emmit parameter
 * add status field to schedule to reduce query load
 * install laravel sanctum
+* add login page
 
 # Not Completed To Do
-* add login page
 * add register page
 * fixed isLoading, isError order on vue page
 * add 404 page when url not found

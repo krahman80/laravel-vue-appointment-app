@@ -1,10 +1,20 @@
+import { isLoggedIn, logOut } from "./components/utils/auth";
+
 export default {
     state: {
         keyword: "",
+        isLogin: false,
+        user: {}
     },
     mutations: {
         lastKeyword(state, payload) {
             state.keyword = payload;
+        },
+        setUser(state, payload) {
+            state.user = payload;
+        },
+        setLoggedIn(state, payload) {
+            state.isLogin = payload;
         }
     },
     actions: {
@@ -17,6 +27,27 @@ export default {
             if (lastKeyword) {
                 context.commit('lastKeyword', JSON.parse(lastKeyword));
             }
+        },
+        async loadUser({ commit, dispatch }) {
+            if (isLoggedIn) {
+                try {
+                    const user = (await axios.get("/user")).data;
+                    //add user object to user state
+                    commit("setUser", user);
+                    //change login state to true
+                    commit("setLoggedIn", true);
+                } catch (error) {
+                    dispatch("logoutUser");
+                }
+            }
+        },
+        logoutUser({ commit }) {
+            //set user state to null object
+            commit("setUser", {});
+            //set login state to false
+            commit("setLoggedIn", false);
+            //set local storage to logout
+            logOut();
         }
     }
 }

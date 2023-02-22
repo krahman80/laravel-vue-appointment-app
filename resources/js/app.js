@@ -31,11 +31,11 @@ const app = new Vue({
     },
     beforeCreate() {
         this.$store.dispatch("getLastKeyword");
-
+        this.$store.dispatch("loadUser");
         // make auth request
         // axios.get("/sanctum/csrf-cookie").then(() => {
         //     axios.post("/login", {
-        //         email: "xxx",
+        //         email: "userYYY@mail.com",
         //         password: "password"
         //     }).then(() => axios.get("/user")).catch(err => { console.log(err.message); });
         // });

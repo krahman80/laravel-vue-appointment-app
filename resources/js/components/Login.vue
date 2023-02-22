@@ -51,6 +51,7 @@
 
 <script>
 import validationsErrors from "../components/utils/validationErrors";
+import { logIn } from "../components/utils/auth.js";
 
 export default {
   mixins: [validationsErrors],
@@ -73,7 +74,17 @@ export default {
             email: this.email,
             password: this.password,
           })
-          .then(() => axios.get("/user"))
+          .then(() => {
+            // axios.get("/user")
+            //call logIn method in auth
+            logIn();
+
+            //call user method inside store
+            this.$store.dispatch("loadUser");
+
+            //redirect to home 
+            this.$router.push({name:"home"});
+          })
           .catch((err) => {
             console.log(err.message);
             this.errors = err.response && err.response.data.errors;
@@ -81,7 +92,6 @@ export default {
           .then(() => (this.loading = false));
       });
 
-      // this.loading = false;
     },
   },
 };

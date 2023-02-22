@@ -20,7 +20,9 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes(['reset' => false]);
 
 Route::middleware('auth')->get('/user', function (Request $request) {
-    return $request->user();
+    $user = $request->user();
+    $user->permissionList = $request->user()->getPermissionNames()->toArray();
+    return response()->json(["id" => $user->id, "name" => $user->name, "email" => $user->email, "permissions" => $user->permissionList], 200);
 });
 
 Route::get('/{any?}', function () {
