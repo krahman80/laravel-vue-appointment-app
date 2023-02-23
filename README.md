@@ -80,9 +80,12 @@ or
 * add status field to schedule to reduce query load
 * install laravel sanctum
 * add login page
+* check if user authenticated add axios interceptor
+* add login menu, logout menu, 
 
 # Not Completed To Do
 * add register page
+* load permission to vuex store and local storage
 * fixed isLoading, isError order on vue page
 * add 404 page when url not found
 * add polymorphic one relation to user

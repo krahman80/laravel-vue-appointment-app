@@ -10,8 +10,8 @@
             placeholder="enter email"
             class="form-control shadow-none"
             v-model="email"
-            :class="[{'is-invalid':errorFor('email')}]"
-          >
+            :class="[{ 'is-invalid': errorFor('email') }]"
+          />
           <v-errors :errors="errorFor(email)"></v-errors>
         </div>
         <div class="mb-3">
@@ -22,8 +22,8 @@
             placeholder="enter password"
             class="form-control shadow-none"
             v-model="password"
-            :class="[{'is-invalid':errorFor('password')}]"
-          >
+            :class="[{ 'is-invalid': errorFor('password') }]"
+          />
           <v-errors :errors="errorFor(password)"></v-errors>
         </div>
 
@@ -33,16 +33,20 @@
             class="btn btn-primary w-100"
             :disabled="loading"
             @click.prevent="login"
-          >Login</button>
+          >
+            Login
+          </button>
         </div>
 
         <hr />
 
         <div>
-          No account yet? <router-link :to="{name:'home'}">Register</router-link>
+          No account yet?
+          <router-link :to="{ name: 'register' }">Register</router-link>
         </div>
         <div>
-          Forgot password? <router-link :to="{name:'home'}">Reset password</router-link>
+          Forgot password?
+          <router-link :to="{ name: 'home' }">Reset password</router-link>
         </div>
       </form>
     </div>
@@ -82,16 +86,15 @@ export default {
             //call user method inside store
             this.$store.dispatch("loadUser");
 
-            //redirect to home 
-            this.$router.push({name:"home"});
+            //redirect to home
+            this.$router.push({ name: "home" });
           })
           .catch((err) => {
-            console.log(err.message);
+            // console.log(err.message);
             this.errors = err.response && err.response.data.errors;
           })
           .then(() => (this.loading = false));
       });
-
     },
   },
 };

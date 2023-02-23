@@ -28,6 +28,14 @@ export default {
                 context.commit('lastKeyword', JSON.parse(lastKeyword));
             }
         },
+        loadStoredState(context) {
+            const lastKeyword = localStorage.getItem('lastKeyword');
+            if (lastKeyword) {
+                context.commit('lastKeyword', JSON.parse(lastKeyword));
+            }
+
+            context.commit("setLoggedIn", isLoggedIn());
+        },
         async loadUser({ commit, dispatch }) {
             if (isLoggedIn) {
                 try {

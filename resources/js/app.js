@@ -22,6 +22,19 @@ Vue.component("v-errors", require("./components/shared/validationErrors").defaul
 
 const store = new Vuex.Store(storeDefinition);
 
+window.axios.interceptors.response.use(
+    response => {
+        return response;
+    },
+    error => {
+        if (401 === error.response.status) {
+            store.dispatch("logoutUser");
+        }
+
+        return Promise.reject(error);
+    }
+);
+
 const app = new Vue({
     el: "#app",
     router,
@@ -30,7 +43,8 @@ const app = new Vue({
         "index": Index,
     },
     beforeCreate() {
-        this.$store.dispatch("getLastKeyword");
+        // this.$store.dispatch("getLastKeyword");
+        this.$store.dispatch("loadStoredState");
         this.$store.dispatch("loadUser");
         // make auth request
         // axios.get("/sanctum/csrf-cookie").then(() => {

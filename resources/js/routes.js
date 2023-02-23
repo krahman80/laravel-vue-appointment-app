@@ -3,6 +3,7 @@ import DoctorList from "./components/DoctorList";
 import DoctorShow from "./components/DoctorShow";
 import AboutComponent from "./components/AboutComponent";
 import Login from "./components/Login"
+import Register from "./components/Register";
 
 const routes = [
     {
@@ -24,6 +25,11 @@ const routes = [
         path: "/auth/login",
         name: "login",
         component: Login
+    },
+    {
+        path: "/auth/register",
+        name: "register",
+        component: Register
     }
 ];
 
