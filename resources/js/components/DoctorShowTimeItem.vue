@@ -1,10 +1,6 @@
 <template>
   <div>
-    <div
-      class="form-group"
-      v-for="(slot, index) in timeSlot"
-      :key="index"
-    >
+    <div class="form-group" v-for="(slot, index) in timeSlot" :key="index">
       <div class="form-check">
         <input
           class="form-check-input"
@@ -12,22 +8,26 @@
           :value="slot.id"
           v-model="selectedId"
           name="timeSlot"
-        >
-        <label
-          class="form-check-label"
-          for="timeSlot"
-        >
-          {{ formatTime(slot.start_time)}} - {{ formatTime(slot.end_time) }}
+        />
+        <label class="form-check-label" for="timeSlot">
+          {{ formatTime(slot.start_time) }} - {{ formatTime(slot.end_time) }}
         </label>
       </div>
     </div>
 
-    <div class="form-group mt-3">
+    <div class="form-group mt-3" v-if="getUserPermission">
       <button
         class="btn btn-secondary btn-sm w-auto"
         :disabled="radioSelected"
         @click="submitAppointmentTime"
-      >Submit</button>
+      >
+        Submit
+      </button>
+    </div>
+    <div class="form-group mt-3 p-2 text-muted" v-else>
+      <p class="m-0 p-0 text-primary" style="font-size: 0.7rem">
+        Login or Register to book an appointment!
+      </p>
     </div>
   </div>
 </template>
@@ -49,6 +49,16 @@ export default {
     // },
     radioSelected() {
       return this.selectedId === null;
+    },
+    getUserPermission() {
+      const permission = this.$store.state.user.permissions;
+      const isLogin = this.$store.state.isLogin;
+      return (
+        isLogin &&
+        permission.map((item) => {
+          item === "submit appointment request";
+        })
+      );
     },
   },
   methods: {

@@ -27,14 +27,6 @@
 
         <div id="navbarSupportedContent" class="collapse navbar-collapse">
           <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <router-link
-                class="nav-link"
-                aria-current="page"
-                :to="{ name: 'home' }"
-                >Home</router-link
-              >
-            </li>
             <!-- <li class="nav-item">
               <router-link
                 class="nav-link"
@@ -42,7 +34,9 @@
                 :to="{name:'about'}"
               >About</router-link>
             </li> -->
-
+            <li class="nav-item" v-if="isLogin">
+              <span class="nav-link">hello, {{ userName }}</span>
+            </li>
             <li class="nav-item" v-if="isLogin">
               <a class="nav-link" href="#" @click.prevent="logout">Logout</a>
             </li>
@@ -78,11 +72,12 @@
 export default {
   data() {
     return {
-      lastSearch: this.$store.state.lastKeyword,
+      userName: null,
     };
   },
   computed: {
     isLogin() {
+      this.checkLogin();
       return this.$store.state.isLogin;
     },
   },
@@ -94,6 +89,9 @@ export default {
       } catch (error) {
         this.$store.dispatch("logoutUser");
       }
+    },
+    checkLogin() {
+      this.userName = this.$store.state.user.name;
     },
   },
 };

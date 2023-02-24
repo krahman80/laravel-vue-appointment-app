@@ -5319,11 +5319,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      lastSearch: this.$store.state.lastKeyword
+      userName: null
     };
   },
   computed: {
     isLogin: function isLogin() {
+      this.checkLogin();
       return this.$store.state.isLogin;
     }
   },
@@ -5346,6 +5347,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    checkLogin: function checkLogin() {
+      this.userName = this.$store.state.user.name;
     }
   }
 });
@@ -5608,6 +5612,13 @@ __webpack_require__.r(__webpack_exports__);
     // },
     radioSelected: function radioSelected() {
       return this.selectedId === null;
+    },
+    getUserPermission: function getUserPermission() {
+      var permission = this.$store.state.user.permissions;
+      var isLogin = this.$store.state.isLogin;
+      return isLogin && permission.map(function (item) {
+        item === "submit appointment request";
+      });
     }
   },
   methods: {
@@ -5841,17 +5852,11 @@ var render = function render() {
     }
   }, [_c("ul", {
     staticClass: "navbar-nav ms-auto"
-  }, [_c("li", {
+  }, [_vm.isLogin ? _c("li", {
     staticClass: "nav-item"
-  }, [_c("router-link", {
-    staticClass: "nav-link",
-    attrs: {
-      "aria-current": "page",
-      to: {
-        name: "home"
-      }
-    }
-  }, [_vm._v("Home")])], 1), _vm._v(" "), _vm.isLogin ? _c("li", {
+  }, [_c("span", {
+    staticClass: "nav-link"
+  }, [_vm._v("hello, " + _vm._s(_vm.userName))])]) : _vm._e(), _vm._v(" "), _vm.isLogin ? _c("li", {
     staticClass: "nav-item"
   }, [_c("a", {
     staticClass: "nav-link",
@@ -6245,7 +6250,7 @@ var render = function render() {
         "for": "timeSlot"
       }
     }, [_vm._v("\n        " + _vm._s(_vm.formatTime(slot.start_time)) + " - " + _vm._s(_vm.formatTime(slot.end_time)) + "\n      ")])])]);
-  }), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _vm.getUserPermission ? _c("div", {
     staticClass: "form-group mt-3"
   }, [_c("button", {
     staticClass: "btn btn-secondary btn-sm w-auto",
@@ -6255,7 +6260,14 @@ var render = function render() {
     on: {
       click: _vm.submitAppointmentTime
     }
-  }, [_vm._v("Submit")])])], 2);
+  }, [_vm._v("\n      Submit\n    ")])]) : _c("div", {
+    staticClass: "form-group mt-3 p-2 text-muted"
+  }, [_c("p", {
+    staticClass: "m-0 p-0 text-primary",
+    staticStyle: {
+      "font-size": "0.7rem"
+    }
+  }, [_vm._v("\n      Login or Register to book an appointment!\n    ")])])], 2);
 };
 var staticRenderFns = [];
 render._withStripped = true;
