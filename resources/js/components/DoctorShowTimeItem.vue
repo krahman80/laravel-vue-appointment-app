@@ -54,10 +54,10 @@ export default {
       const permission = this.$store.state.user.permissions;
       const isLogin = this.$store.state.isLogin;
       return (
-        isLogin &&
-        permission.map((item) => {
-          item === "submit appointment request";
-        })
+        isLogin && permission.includes("submit appointment request")
+        // permission.map((item) => {
+        //   item === "submit appointment request";
+        // })
       );
     },
   },

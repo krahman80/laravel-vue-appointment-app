@@ -4,6 +4,7 @@ import DoctorShow from "./components/DoctorShow";
 import AboutComponent from "./components/AboutComponent";
 import Login from "./components/Login"
 import Register from "./components/Register";
+import Err from "./components/shared/Error404";
 
 const routes = [
     {
@@ -30,6 +31,11 @@ const routes = [
         path: "/auth/register",
         name: "register",
         component: Register
+    },
+    {
+        path: "/:catchAll(.*)",
+        name: "not found",
+        component: Err
     }
 ];
 

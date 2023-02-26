@@ -5616,11 +5616,14 @@ __webpack_require__.r(__webpack_exports__);
     getUserPermission: function getUserPermission() {
       var permission = this.$store.state.user.permissions;
       var isLogin = this.$store.state.isLogin;
-      return isLogin && permission.map(function (item) {
-        item === "submit appointment request";
-      });
+      return isLogin && permission.includes("submit appointment request")
+      // permission.map((item) => {
+      //   item === "submit appointment request";
+      // })
+      ;
     }
   },
+
   methods: {
     formatTime: function formatTime(timeSlot) {
       return String(timeSlot).substring(0, timeSlot.length - 3);
@@ -6611,7 +6614,7 @@ var staticRenderFns = [function () {
     staticClass: "col-12"
   }, [_c("div", {
     staticClass: "text-muted text-center"
-  }, [_vm._v("Unknoun error has occured, Please try again later!")])])]);
+  }, [_vm._v("\n      Page not found, please try again later!\n    ")])])]);
 }];
 render._withStripped = true;
 
@@ -6819,12 +6822,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _components_DoctorList__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/DoctorList */ "./resources/js/components/DoctorList.vue");
 /* harmony import */ var _components_DoctorShow__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/DoctorShow */ "./resources/js/components/DoctorShow.vue");
 /* harmony import */ var _components_AboutComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/AboutComponent */ "./resources/js/components/AboutComponent.vue");
 /* harmony import */ var _components_Login__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Login */ "./resources/js/components/Login.vue");
 /* harmony import */ var _components_Register__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Register */ "./resources/js/components/Register.vue");
+/* harmony import */ var _components_shared_Error404__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/shared/Error404 */ "./resources/js/components/shared/Error404.vue");
+
 
 
 
@@ -6851,8 +6856,12 @@ var routes = [{
   path: "/auth/register",
   name: "register",
   component: _components_Register__WEBPACK_IMPORTED_MODULE_4__["default"]
+}, {
+  path: "/:catchAll(.*)",
+  name: "not found",
+  component: _components_shared_Error404__WEBPACK_IMPORTED_MODULE_5__["default"]
 }];
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_5__["default"]({
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_6__["default"]({
   routes: routes,
   mode: "history"
 });
