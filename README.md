@@ -86,9 +86,9 @@ or
 * load permission to vuex store and local storage
 * if login and has permission then show submit button on submit timeslot
 * only login patient can book an appointment 
+* add 404 page when url not found
 
 # Not Completed To Do
 * fixed isLoading, isError order on vue page
-* add 404 page when url not found
 * add polymorphic one relation to user
 * add user booking history
