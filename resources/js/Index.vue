@@ -14,13 +14,13 @@
           <span class="font-weight-bold">Appointment App</span>
         </router-link>
         <button
+          class="navbar-toggler shadow-none"
           type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent"
           aria-expanded="false"
           aria-label="Toggle navigation"
-          class="navbar-toggler"
         >
           <span class="navbar-toggler-icon"></span>
         </button>

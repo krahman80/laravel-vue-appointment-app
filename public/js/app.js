@@ -5900,11 +5900,11 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("button", {
-    staticClass: "navbar-toggler",
+    staticClass: "navbar-toggler shadow-none",
     attrs: {
       type: "button",
-      "data-toggle": "collapse",
-      "data-target": "#navbarSupportedContent",
+      "data-bs-toggle": "collapse",
+      "data-bs-target": "#navbarSupportedContent",
       "aria-controls": "navbarSupportedContent",
       "aria-expanded": "false",
       "aria-label": "Toggle navigation"
@@ -6017,7 +6017,7 @@ var render = function render() {
     on: {
       click: _vm.searchDoctor
     }
-  }, [_vm._v("Search")])])])])])]), _vm._v(" "), _c("h1", {
+  }, [_vm._v("\n                  Search\n                ")])])])])])]), _vm._v(" "), _c("h1", {
     staticClass: "h3 my-3"
   }, [_vm._v("Doctor List")]), _vm._v(" "), _vm.noData ? _c("div", {
     staticClass: "row mb-4"
@@ -6294,7 +6294,9 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "w-50 mx-auto"
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-sm-12 col-lg-6 mx-auto"
   }, [_c("div", {
     staticClass: "card card-body"
   }, [_c("form", [_c("div", {
@@ -6381,19 +6383,19 @@ var render = function render() {
         return _vm.login.apply(null, arguments);
       }
     }
-  }, [_vm._v("\n          Login\n        ")])]), _vm._v(" "), _c("hr"), _vm._v(" "), _c("div", [_vm._v("\n        No account yet?\n        "), _c("router-link", {
+  }, [_vm._v("\n            Login\n          ")])]), _vm._v(" "), _c("hr"), _vm._v(" "), _c("div", [_vm._v("\n          No account yet?\n          "), _c("router-link", {
     attrs: {
       to: {
         name: "register"
       }
     }
-  }, [_vm._v("Register")])], 1), _vm._v(" "), _c("div", [_vm._v("\n        Forgot password?\n        "), _c("router-link", {
+  }, [_vm._v("Register")])], 1), _vm._v(" "), _c("div", [_vm._v("\n          Forgot password?\n          "), _c("router-link", {
     attrs: {
       to: {
         name: "home"
       }
     }
-  }, [_vm._v("Reset password")])], 1)])])]);
+  }, [_vm._v("Reset password")])], 1)])])])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -6417,7 +6419,9 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "w-50 mx-auto"
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-sm-12 col-lg-6 mx-auto"
   }, [_c("div", {
     staticClass: "card card-body"
   }, [_c("form", [_c("div", {
@@ -6574,13 +6578,13 @@ var render = function render() {
         return _vm.register.apply(null, arguments);
       }
     }
-  }, [_vm._v("\n          Register\n        ")])]), _vm._v(" "), _c("hr"), _vm._v(" "), _c("div", [_vm._v("\n        Have an account?\n        "), _c("router-link", {
+  }, [_vm._v("\n            Register\n          ")])]), _vm._v(" "), _c("hr"), _vm._v(" "), _c("div", [_vm._v("\n          Have an account?\n          "), _c("router-link", {
     attrs: {
       to: {
         name: "login"
       }
     }
-  }, [_vm._v("Login")])], 1)])])]);
+  }, [_vm._v("Login")])], 1)])])])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -6723,12 +6727,19 @@ var app = new Vue({
 /*!***********************************!*\
   !*** ./resources/js/bootstrap.js ***!
   \***********************************/
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
 // window._ = require('lodash');
 
+// import partial module es6 style
+
 try {
-  __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
+  // require('bootstrap');
+  window.Collapse = bootstrap__WEBPACK_IMPORTED_MODULE_0__.Collapse;
+  window.Dropdown = bootstrap__WEBPACK_IMPORTED_MODULE_0__.Dropdown;
 } catch (e) {}
 
 /**

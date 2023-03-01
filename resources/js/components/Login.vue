@@ -1,54 +1,56 @@
 <template>
-  <div class="w-50 mx-auto">
-    <div class="card card-body">
-      <form>
-        <div class="my-3">
-          <label for="email">Email</label>
-          <input
-            type="text"
-            name="email"
-            placeholder="enter email"
-            class="form-control shadow-none"
-            v-model="email"
-            :class="[{ 'is-invalid': errorFor('email') }]"
-          />
-          <v-errors :errors="errorFor(email)"></v-errors>
-        </div>
-        <div class="mb-3">
-          <label for="email">Password</label>
-          <input
-            type="password"
-            name="password"
-            placeholder="enter password"
-            class="form-control shadow-none"
-            v-model="password"
-            :class="[{ 'is-invalid': errorFor('password') }]"
-          />
-          <v-errors :errors="errorFor(password)"></v-errors>
-        </div>
+  <div class="row">
+    <div class="col-sm-12 col-lg-6 mx-auto">
+      <div class="card card-body">
+        <form>
+          <div class="my-3">
+            <label for="email">Email</label>
+            <input
+              type="text"
+              name="email"
+              placeholder="enter email"
+              class="form-control shadow-none"
+              v-model="email"
+              :class="[{ 'is-invalid': errorFor('email') }]"
+            />
+            <v-errors :errors="errorFor(email)"></v-errors>
+          </div>
+          <div class="mb-3">
+            <label for="email">Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="enter password"
+              class="form-control shadow-none"
+              v-model="password"
+              :class="[{ 'is-invalid': errorFor('password') }]"
+            />
+            <v-errors :errors="errorFor(password)"></v-errors>
+          </div>
 
-        <div class="my-3">
-          <button
-            type="submit"
-            class="btn btn-primary w-100"
-            :disabled="loading"
-            @click.prevent="login"
-          >
-            Login
-          </button>
-        </div>
+          <div class="my-3">
+            <button
+              type="submit"
+              class="btn btn-primary w-100"
+              :disabled="loading"
+              @click.prevent="login"
+            >
+              Login
+            </button>
+          </div>
 
-        <hr />
+          <hr />
 
-        <div>
-          No account yet?
-          <router-link :to="{ name: 'register' }">Register</router-link>
-        </div>
-        <div>
-          Forgot password?
-          <router-link :to="{ name: 'home' }">Reset password</router-link>
-        </div>
-      </form>
+          <div>
+            No account yet?
+            <router-link :to="{ name: 'register' }">Register</router-link>
+          </div>
+          <div>
+            Forgot password?
+            <router-link :to="{ name: 'home' }">Reset password</router-link>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </template>

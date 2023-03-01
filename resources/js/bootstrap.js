@@ -1,7 +1,12 @@
 // window._ = require('lodash');
 
+// import partial module es6 style
+import { Collapse, Dropdown } from 'bootstrap';
+
 try {
-    require('bootstrap');
+    // require('bootstrap');
+    window.Collapse = Collapse;
+    window.Dropdown = Dropdown;
 } catch (e) { }
 
 /**
